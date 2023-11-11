@@ -1,0 +1,54 @@
+.label-toggle {
+  cursor: pointer;
+  text-indent: -9999px;
+  width: 200px;
+  height: 100px;
+  background: rgba(69, 69, 69, 0.371);
+  display: block;
+  border-radius: 100px;
+  position: relative;
+}
+
+.label-toggle:after {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 90px;
+  height: 90px;
+  background: #a7a7a7de;
+  border-radius: 90px;
+  transition: 0.3s;
+}
+
+input:checked + .label-toggle {
+  background: #1bd02ab1;
+}
+
+input:checked + .label-toggle:after {
+  left: calc(100% - 5px);
+  transform: translateX(-100%);
+}
+
+.label-toggle:active:after {
+  width: 130px;
+}
+
+#toggle-btn {
+  opacity: 0;
+}
+
+.toggle-favorite-games {
+  transform:scale(0.4) ;
+}
+
+.display-favorite-games {
+  display: flex; 
+  flex-direction: row;
+  align-items:center; 
+  width:80%; 
+  height: 100px;
+  text-shadow: 1px 1px 2px rgb(0, 0, 0);
+}
+
+

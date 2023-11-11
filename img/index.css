@@ -1,0 +1,164 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Play&display=swap');
+/*    font-family: 'Play', sans-serif;    text jeux vidéos   */
+
+
+#indexBody {
+  background: url(img/RemnantBG.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  backdrop-filter: blur(10px);
+  height: 1200px;
+  margin: 0;
+}
+
+
+#indexHeader {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+
+#indexLogo {
+  position: relative;
+  width: 10%;
+  height: 20vh;
+  border-radius: 50%;
+  box-shadow: 0 0 5px white;
+  margin: 10px;
+}
+
+
+#indexTitle {
+  position: relative;
+  height: 15vh;
+  width: 80%;
+  background-color: rgba(228, 228, 228, 0.5);
+  border-radius: 10px;
+  text-align: center;
+  padding-top: 20px;
+  box-shadow: 0 0 5px white;
+  margin-left: 5%;
+  font-family: 'Play', sans-serif;
+}
+
+
+.homeNavBar {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: rgb(253, 253, 0);
+  text-shadow: 3px 3px 15px rgba(0, 0, 0, 0.781);
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-family: 'Play', sans-serif;
+  font-size: 25px;
+  transition: 300ms;
+}
+li a:hover {
+  text-shadow: 1px 1px 2px lightyellow;
+  transition: 100ms ease;
+}
+
+
+
+/* -------Header-------- */
+
+.mainContainer {
+  width: 100%;
+  height: 100vh;
+display: flex;
+flex-direction: column;
+}
+
+
+.presentationContainer {
+  display: flex;
+  justify-content: center;
+  height: 33%;
+}
+
+
+.presentationBox {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  height: 90%;
+  background: rgba(212, 212, 212, 0.473);
+  margin-top: 0.8%;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0,10);;
+  transition: 200ms ease;
+  overflow-y: scroll;
+  border-radius: 5px;
+}
+
+
+.presentationHeader {
+  margin: 1%;
+  font-family: 'Play', sans-serif;
+}
+
+
+.presentationText {
+  font-size: 30px;
+  text-shadow: 1px 1px 2px black;
+  font-family: 'Play', sans-serif;
+  margin-left: 1%;
+}
+
+
+.lastNewsContainer {
+  display: flex;
+  justify-content: center;
+  height: 33%;
+}
+
+
+.lastNewsList {
+  width: 80%;
+  height: 90%;
+  background: rgba(212, 212, 212, 0.473);
+  margin-top: 0.8%;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0,10);;
+  transition: 200ms ease;
+  overflow-y: scroll;
+  border-radius: 5px;
+}
+
+
+.gamesInDevContainer {
+  display: flex;
+  justify-content: center;
+  height: 33%;
+  
+}
+
+
+.gamesInDevList {
+  width: 80%;
+  height: 90%;
+  background: rgba(212, 212, 212, 0.473);
+  margin-top: 0.8%;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0,10);;
+  transition: 200ms ease;
+  overflow-y: scroll;
+  border-radius: 5px;
+}
+
+
+.presentationBox:hover, .lastNewsList:hover, .gamesInDevList:hover {
+  box-shadow: 0px 0px 15px rgba(0, 0, 0,10);
+  transition: 200ms ease;
+}
