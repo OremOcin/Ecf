@@ -6,9 +6,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <link rel="stylesheet" href="index.css">
+  <script src="managerDashboard.js"></script>
 </head>
 
 <body id="indexBody">
+  <script>
+    var intervalId = -1;
+  </script>
+
   <header id="indexHeader">
     <img id="indexLogo" src="img/logo_gamesoft refait.png" alt="Logo de L'entreprise">
     <h1 id="indexTitle">Bienvenue sur votre plateforme en ligne Gamesoft Studio <br> Stats et News sur
@@ -19,7 +24,7 @@
 
   <ul class="homeNavBar">
     <li><a href="#home">Accueil</a></li>
-    <li><a href="browseVideoGames.php">Jeux</a></li>
+    <li><a href="userBrowseVideoGames.php">Jeux</a></li>
     <li><a href="registerPage.php">M'enregistrer</a></li>
     <li><a href="loginPage.php">Me connecter</a></li>
     <li><a href="userProfile.php">Mon Profil</a></li>
@@ -37,12 +42,25 @@
       </div>
     </div>
     <div class="lastNewsContainer">
-      <div class="lastNewsList"></div>
+      <div id="news-container" class="lastNewsList"></div>
     </div>
     <div class="gamesInDevContainer">
       <div class="gamesInDevList"></div>
     </div>
   </div>
+  <script>
+    fetchAllNews();
+    console.log("intervalId before = " + intervalId);
+    window.onbeforeunload = function (event) {
+      clearInterval(intervalId);
+      clearInterval = -1;
+    }
+    window.addEventListener("load", (e) => {
+      intervalId = setInterval(() => {
+        fetchAllNews();
+      }, 15000);
+    })
+  </script>
 </body>
 
 </html>

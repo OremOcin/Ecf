@@ -47,7 +47,7 @@ async function fetchAllNews() {
      return  result.json();
   });
   const allNews = doFetchAllNews['news'];
-  console.log("All news = " + JSON.stringify(allNews));
+  //console.log("All news = " + JSON.stringify(allNews));
   if(allNews === null || allNews === undefined || allNews.length === 0) {
     const isNullOrUndefined = allNews === null || allNews === undefined;
     newsContainer.innerHTML = `<div style="display:flex; flex-direction:column; align-items:center; justify-content:center; width:100%; height:100%; font-size:15pt; color:yellow;" >
@@ -113,4 +113,18 @@ function getBlob(e) {
     };
 };
 }
+}
+
+async function FetchAllDevGames() {
+  const doFetchDevGames = await fetch('fetchDevGames.php', 
+  {
+      method: "POST",
+      body: JSON.stringify({}),
+      headers: {
+          Accept: 'application/json'
+      }
+  }).catch( (error)=>{console.log("fetchDevGames error doFetch "+error);} ).
+  then( (result) =>{
+     return  result.json();
+  });
 }
