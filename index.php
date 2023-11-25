@@ -45,7 +45,7 @@
       <div id="news-container" class="lastNewsList"></div>
     </div>
     <div class="gamesInDevContainer">
-      <div class="gamesInDevList"></div>
+      <div id="games-dev-container" class="gamesInDevList"></div>
     </div>
   </div>
   <script>
@@ -54,12 +54,13 @@
     window.onbeforeunload = function (event) {
       clearInterval(intervalId);
       clearInterval = -1;
-    }
-    window.addEventListener("load", (e) => {
+    };
+    /*window.addEventListener("load", (e) => {
       intervalId = setInterval(() => {
         fetchAllNews();
       }, 15000);
-    })
+    });*/
+    FetchAllDevGames();
   </script>
 </body>
 

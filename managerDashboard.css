@@ -173,7 +173,7 @@ li a:hover {
 
 .toast {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   text-align: center;
   justify-content: center;
   width: 100%;
@@ -307,11 +307,11 @@ li a:hover {
   }
 
   .toast-header {
+    display: flex;
+    flex-direction: row;
     color: rgba(253, 253, 0, 0.598);
     width: 100%;
     height: 20%;
-    display: flex;
-    flex-direction: row;
     padding: 0.5%;
   }
 
@@ -321,6 +321,7 @@ li a:hover {
     height: 100%;
     font-size: 2rem;
     text-align: center;
+    color: rgba(253, 253, 0, 0.598);
   }
  
   .toast-header-date {
@@ -330,6 +331,7 @@ li a:hover {
     text-align: right;
     align-items: center;
     font-size: 0.95rem;
+    color: rgba(253, 253, 0, 0.598);
   }
 
   #newsSubmit {
@@ -432,3 +434,75 @@ li a:hover {
     justify-content: center;
     align-items: center;
   }
+
+  .videoToast-dashTable {
+    border-collapse: collapse;
+    font-size: 1rem;  
+    width: 45%; 
+    height: 40%;
+    box-shadow: 2px 2px 20px rgb(0, 0, 0); 
+    margin: 10px;
+   }
+
+   .videoToast-dashTable table{
+    border-collapse: separate;
+    border-spacing: 0;
+   }
+   .videoToast-dashTable thead tr {
+     background-color: #92929289;
+     color: #ffffff;
+     text-align: left;
+     border-radius: 5px;
+   }
+ 
+   .videoToast-dashTable th,
+   .videoToast-dashTable td {
+     padding: 12px 15px;
+     color: rgb(255, 255, 255);
+     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.498);
+     border-radius: 5px;
+ }
+ 
+ .videoToast-dashTable tbody tr {
+   border-bottom: 1px solid #c3c3c3;
+   border-radius: 5px;
+ }
+ 
+ .videoToast-dashTable tbody tr:nth-of-type(even) {
+   background-color: #ffffff;
+ }
+ 
+ 
+ .styled-table tbody tr.active-row {
+   font-weight: bold;
+   color: #cccccc;
+ }
+ 
+ .videoToast-dashTable-content:hover {
+   box-shadow: 3px 3px 5px rgba(38, 38, 38, 0.885);
+ }
+
+ .lds-dual-ring {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+}
+.lds-dual-ring:after {
+  content: " ";
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border-radius: 50%;
+  border: 6px solid #bab706;
+  border-color: #bab706 transparent #bab706 transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
