@@ -42,9 +42,11 @@
       </div>
     </div>
     <div class="lastNewsContainer">
+      <div class="headerText">FIL D'ACTUALITES</div>
       <div id="news-container" class="lastNewsList"></div>
     </div>
     <div class="gamesInDevContainer">
+      <div class="headerText presentationText">JEUX EN DEVELOPPEMENT</div>
       <div id="games-dev-container" class="gamesInDevList"></div>
     </div>
   </div>

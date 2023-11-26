@@ -86,7 +86,7 @@ async function fetchAllNews() {
                   <h2 >${allNews[i]["content"]}</h2>
                 </div>
                 <div class="toast-image">
-                    <img id="screenshot#_${i}" style="max-width: 40%;box-shadow: 0 0 15px black;border-radius:2px; " src="${allNews[i]["image"]}" alt="Girl in a jacket">
+                    <img class="screen-shot" id="screenshot#_${i}" src="${allNews[i]["image"]}" alt="Girl in a jacket">
                     </img>
                 </div>
           </div>
@@ -170,8 +170,8 @@ async function FetchAllDevGames() {
   devGamesContainer.innerHTML = "";
   let content = "";
   const size = fetchedDevGames.length;
-  let i = 0;
-  for (; i < size; i++) {
+  let index = 0;
+  for (; index < size; index++) {
     content += `<table class="videoToast-dashTable" style="justify-content:center; align-items:center;">
     <thead>
         <tr>
@@ -185,17 +185,17 @@ async function FetchAllDevGames() {
     </thead>
     <tbody>
       <tr class="videoToast-dashTable-content" >
-          <td id="title-${index}" > ${fetchedDevGames["title"]}</td>
-          <td id="description-${index}"> ${fetchedDevGames["description"]}</td>
-          <td id="category-${index}"> ${fetchedDevGames["category"]}</td>
-          <td id="media-${index}"> ${fetchedDevGames["media"]}</td>
-          <td id="engine-${index}"> ${fetchedDevGames["engine"]}</td>
-          <td id="delivery-date-${index}"> ${fetchedDevGames["delivery_date"]}</td>
+          <td  id="title-${index}" > ${fetchedDevGames[index]["title"]}</td>
+          <td id="description-${index}"> ${fetchedDevGames[index]["description"]}</td>
+          <td id="category-${index}"> ${fetchedDevGames[index]["category"]["name"]}</td>
+          <td id="media-${index}"> ${fetchedDevGames[index]["media"]["name"]}</td>
+          <td id="engine-${index}"> ${fetchedDevGames[index]["engine"]["name"]}</td>
+          <td id="delivery-date-${index}"> ${fetchedDevGames[index]["date"]}</td>
       </tr>
     </tbody>
   </table>
 </div>`;
-    if (i !== size - 1) {
+    if (index !== size - 1) {
       content += `<div class="videoListVerticalSpace"></div>`;
     }
   }
