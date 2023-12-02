@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <link rel="stylesheet" href="loginPage.css">
+  <script src="login.js"></script>
 </head>
 
 <body id="loginPageBody">
@@ -37,15 +38,14 @@
           <input type="password" id="pwd" required>
         </li>
         <li class="form-row">
-          <button class="submit-button">Mot de passe oublié</button>
-        </li>
-        <li class="form-row">
-          <button class="submit-button" type="submit">Submit</button>
+          <button id="login" class="submit-button" type="button">Se connecter</button>
         </li>
       </ul>
     </form>
   </div>
-
+  <script>
+    document.getElementById("register").addEventListener("click", login);
+  </script>
 </body>
 
 </html>

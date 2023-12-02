@@ -14,11 +14,17 @@
 }
 
 
-#indexHeader {
+.index-header {
+  display: flex;
+  flex: auto;
   width: 100%;
   margin: 0;
   padding: 0;
+}
+
+.login {
   display: flex;
+  flex-direction: row;
 }
 
 
