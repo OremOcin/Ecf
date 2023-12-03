@@ -44,7 +44,7 @@
     </form>
   </div>
   <script>
-    document.getElementById("register").addEventListener("click", login);
+    document.getElementById("login").addEventListener("click", login);
   </script>
 </body>
 
