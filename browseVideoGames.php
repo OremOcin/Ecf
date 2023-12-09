@@ -1,6 +1,11 @@
 <?php
 session_start();
-$_SESSION['email'] = 'bobo@bubu.com';
+$role = array_key_exists("role", $_SESSION) ? $_SESSION["role"] : null;
+$user_name = array_key_exists("username", $_SESSION) ? $_SESSION["username"] : null;
+$user_email = array_key_exists("email", $_SESSION) ? $_SESSION["email"] : null;
+echo "role " . is_null($role) . "\n";
+echo "username " . is_null($user_name) . "\n";
+echo "email " . is_null($user_email) . "\n";
 ?>
 
 <!DOCTYPE html>
@@ -11,8 +16,8 @@ $_SESSION['email'] = 'bobo@bubu.com';
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Rechercher dans la liste des jeux-vidéos</title>
-  <link rel="stylesheet" href="userbrowseVideoGames.css">
-  <script src="userFetchVideoGames.js"></script>
+  <link rel="stylesheet" href="browseVideoGames.css">
+  <script src="fetchVideoGames.js"></script>
 </head>
 
 <body id="browseVideoGamesBody">
@@ -26,17 +31,13 @@ $_SESSION['email'] = 'bobo@bubu.com';
 
   <ul class="homeNavBar">
     <li><a href="index.php">Accueil</a></li>
-    <li><a href="browseVideoGames.php">Jeux</a></li>
+    <li><a href="userBrowseVideoGames.php">Jeux</a></li>
     <li><a href="registerPage.php">M'enregistrer</a></li>
     <li><a href="#help">Me connecter</a></li>
     <li><a href="userProfile.php">Mon Profil</a></li>
   </ul>
 
   <div class="mainContainer">
-    <?php
-    echo "<span id=\"email-user\" hidden>" . $_SESSION['email'] . "</span>"
-      ?>
-
     <div style="display: flex; flex-direction: row; background-color: transparent">
       <div id="horizontalSpaceContainer"></div>
       <div class="toggle-favorite-games">
@@ -217,13 +218,13 @@ $_SESSION['email'] = 'bobo@bubu.com';
     </div>
   </div>
   <script>
-    document.getElementById('select-engine').addEventListener('change', userFetchGames);
-    document.getElementById('select-statut').addEventListener('change', userFetchGames);
-    document.getElementById('select-category').addEventListener('change', userFetchGames);
-    document.getElementById('select-device').addEventListener('change', userFetchGames);
-    document.getElementById('select-delivery-date').addEventListener('change', userFetchGames);
-    document.getElementById('select-weight').addEventListener('change', userFetchGames);
-    userFetchGames();
+    document.getElementById('select-engine').addEventListener('change', fetchGames);
+    document.getElementById('select-statut').addEventListener('change', fetchGames);
+    document.getElementById('select-category').addEventListener('change', fetchGames);
+    document.getElementById('select-device').addEventListener('change', fetchGames);
+    document.getElementById('select-delivery-date').addEventListener('change', fetchGames);
+    document.getElementById('select-weight').addEventListener('change', fetchGames);
+    fetchGames();
   </script>
 </body>
 

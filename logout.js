@@ -12,5 +12,7 @@ async function logout() {
     .then((result) => {
       return result.json();
     });
+  console.log(doLogOut["response"]);
   alert("Vous avez été déconnecté.");
+  window.location = "index.php";
 }
