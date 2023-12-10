@@ -6,6 +6,14 @@ $user_email = array_key_exists("email", $_SESSION) ? $_SESSION["email"] : null;
 echo "role " . is_null($role) . "\n";
 echo "username " . is_null($user_name) . "\n";
 echo "email " . is_null($user_email) . "\n";
+function getEmail()
+{
+  global $user_email;
+  if (!is_null($user_email)) {
+    return $user_email;
+  }
+  return null;
+}
 ?>
 
 <!DOCTYPE html>
@@ -16,11 +24,15 @@ echo "email " . is_null($user_email) . "\n";
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Rechercher dans la liste des jeux-vidéos</title>
-  <link rel="stylesheet" href="browseVideoGames.css">
+  <link rel="stylesheet" href="userBrowseVideoGames.css">
   <script src="fetchVideoGames.js"></script>
 </head>
 
 <body id="browseVideoGamesBody">
+  <script>
+    var email = `<?php echo getEmail(); ?>`;
+    console.log("email is set to : '" + email + "'");
+  </script>
   <header id="indexHeader">
     <img id="indexLogo" src="img/logo_gamesoft refait.png" alt="Logo de L'entreprise">
     <h1 id="indexTitle">Bienvenue sur votre plateforme en ligne Gamesoft Studio <br> Stats et News sur
@@ -224,7 +236,12 @@ echo "email " . is_null($user_email) . "\n";
     document.getElementById('select-device').addEventListener('change', fetchGames);
     document.getElementById('select-delivery-date').addEventListener('change', fetchGames);
     document.getElementById('select-weight').addEventListener('change', fetchGames);
-    fetchGames();
+    console.log("email = '" + email + "'");
+    if (!email || email === "") {
+      fetchAllVideoGames();
+    } else {
+      fetchGames();
+    }
   </script>
 </body>
 

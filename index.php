@@ -61,7 +61,7 @@ echo "email " . is_null($user_email) . "\n";
 
   <ul class="homeNavBar">
     <li><a href="#home">Accueil</a></li>
-    <li><a href="browseVideoGames.php">Jeux</a></li>
+    <li><a href="userBrowseVideoGames.php">Jeux</a></li>
 
     <?php
     if (is_null($user_name) && is_null($user_email)) {

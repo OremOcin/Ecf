@@ -20,7 +20,7 @@
 
   <ul class="homeNavBar">
     <li><a href="index.php">Accueil</a></li>
-    <li><a href="browseVideoGames.php">Les Jeux Vidéos</a></li>
+    <li><a href="userBrowseVideoGames.php">Les Jeux Vidéos</a></li>
     <li><a href="registerPage.php">M'enregistrer</a></li>
     <li><a href="loginPage.php">Me connecter</a></li>
     <li><a href="userProfile.php">Mon Profil</a></li>
