@@ -43,16 +43,27 @@ function getEmail()
 
   <ul class="homeNavBar">
     <li><a href="index.php">Accueil</a></li>
-    <li><a href="userBrowseVideoGames.php">Jeux</a></li>
-    <li><a href="registerPage.php">M'enregistrer</a></li>
-    <li><a href="#help">Me connecter</a></li>
-    <li><a href="userProfile.php">Mon Profil</a></li>
+    <?php
+    if (!is_null($user_email)) {
+      echo <<<EOL
+       <li><a href="userProfile.php">Mon Profil</a></li>
+      EOL;
+    } else {
+      echo <<<EOL
+        <li><a href="registerPage.php">M'enregistrer</a></li>
+        <li><a href="loginPage.php">Me connecter</a></li>
+        EOL;
+    }
+    ?>
   </ul>
 
   <div class="mainContainer">
     <div style="display: flex; flex-direction: row; background-color: transparent">
       <div id="horizontalSpaceContainer"></div>
-      <div class="toggle-favorite-games">
+      <?php
+      if (!is_null($user_email)) {
+        echo <<<EOL
+       <div class="toggle-favorite-games">
         <div class="content">
           <div id="toggle-state" hidden>false</div>
           <input type="checkbox" id="toggle-btn" />
@@ -66,6 +77,9 @@ function getEmail()
 
         </div>
       </div>
+      EOL;
+      }
+      ?>
       <script>
         document.getElementById('toggle-btn').addEventListener('change', toggleFavorite);
       </script>
@@ -230,17 +244,23 @@ function getEmail()
     </div>
   </div>
   <script>
-    document.getElementById('select-engine').addEventListener('change', fetchGames);
-    document.getElementById('select-statut').addEventListener('change', fetchGames);
-    document.getElementById('select-category').addEventListener('change', fetchGames);
-    document.getElementById('select-device').addEventListener('change', fetchGames);
-    document.getElementById('select-delivery-date').addEventListener('change', fetchGames);
-    document.getElementById('select-weight').addEventListener('change', fetchGames);
     console.log("email = '" + email + "'");
     if (!email || email === "") {
       fetchAllVideoGames();
+      document.getElementById('select-engine').addEventListener('change', fetchAllVideoGames);
+      document.getElementById('select-statut').addEventListener('change', fetchAllVideoGames);
+      document.getElementById('select-category').addEventListener('change', fetchAllVideoGames);
+      document.getElementById('select-device').addEventListener('change', fetchAllVideoGames);
+      document.getElementById('select-delivery-date').addEventListener('change', fetchAllVideoGames);
+      document.getElementById('select-weight').addEventListener('change', fetchAllVideoGames);
     } else {
       fetchGames();
+      document.getElementById('select-engine').addEventListener('change', fetchGames);
+      document.getElementById('select-statut').addEventListener('change', fetchGames);
+      document.getElementById('select-category').addEventListener('change', fetchGames);
+      document.getElementById('select-device').addEventListener('change', fetchGames);
+      document.getElementById('select-delivery-date').addEventListener('change', fetchGames);
+      document.getElementById('select-weight').addEventListener('change', fetchGames);
     }
   </script>
 </body>

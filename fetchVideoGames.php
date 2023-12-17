@@ -24,6 +24,7 @@ $dsn = "mysql:host=$host;dbname=$db";
 
 $pdo = new PDO($dsn, $root, $password);
 
+
 $sql = "SELECT EXISTS (SELECT 1 FROM games) AS Output";
 $res = $pdo->query($sql);
 $result = $res->fetch();
@@ -35,8 +36,74 @@ if ($result['Output'] == 0) {
   echo json_encode($log);
   return;
 }
+$WHERE = "";
+$WHEREIsActive = false;
+if (!empty($engine)) {
+  $WHEREIsActive = true;
+  $sql = "SELECT id FROM engines WHERE name ='" . $engine . "'";
+  $res = $pdo->query($sql);
+  $result = $res->fetch();
+  $engine_id = $result[0];
+  $WHERE = " WHERE engine_id = '" . $engine_id . "'";
+}
+
+if (!empty($device)) {
+  $sql = "SELECT id FROM medias WHERE name ='" . $device . "'";
+  $res = $pdo->query($sql);
+  $result = $res->fetch();
+  $device_id = $result[0];
+
+  if ($WHEREIsActive) { // Début
+    $WHERE = $WHERE . " AND ";
+  } else { //A faire sur les trois autres qui suivent.
+    $WHERE = " WHERE ";
+  }
+  $WHERE = $WHERE . " media_id = '" . $device_id . "'"; //Fin
+}
+if (!empty($status)) {
+  $sql = "SELECT id FROM status WHERE value ='" . $status . "'";
+  $res = $pdo->query($sql);
+  $result = $res->fetch();
+  $status_id = $result[0];
+  if ($WHEREIsActive) { // Début
+    $WHERE = $WHERE . " AND ";
+  } else { //A faire sur les trois autres qui suivent.
+    $WHERE = " WHERE ";
+  }
+  $WHERE = $WHERE . " status_id = '" . $status_id . "'"; //Fin
+}
+
+if (!empty($type)) {
+  $sql = "SELECT id FROM games_categories WHERE name ='" . $type . "'";
+  $res = $pdo->query($sql);
+  $result = $res->fetch();
+  $type_id = $result[0];
+
+  if ($WHEREIsActive) { // Début
+    $WHERE = $WHERE . " AND ";
+  } else { //A faire sur les trois autres qui suivent.
+    $WHERE = " WHERE ";
+  }
+  $WHERE = $WHERE . " category_id = '" . $type_id . "'"; //Fin
+}
+$ORDERBY = "";
+$isOrderBy = false;
+if (!empty($weight)) {
+  $isOrderBy = true;
+  $ORDERBY = " ORDER BY weight " . $weight;
+}
+if (!empty($delivery_date)) {
+  if ($isOrderBy) {
+    $ORDERBY = $ORDERBY . ", delivery_date " . $delivery_date;
+  } else {
+    $ORDERBY = " ORDER BY delivery_date " . $delivery_date;
+  }
+}
+
 if (!isset($email) || is_null($email) || empty($email)) {
   $sql = "SELECT * FROM games";
+  $sql = $sql . $WHERE;
+  $sql = $sql . $ORDERBY;
   $rows = $pdo->query($sql)->fetchAll();
   $games = [];
   foreach ($rows as $row) {
@@ -94,75 +161,12 @@ if (!isset($email) || is_null($email) || empty($email)) {
     ];
     array_push($games, $game); // On met $game dans $games
   }
-  $log = ['games' => $games];
+  $log = ['sql' => $sql, 'games' => $games];
   $pdo = null;
   header('Access-Control-Allow-Origin: *');
   header('Content-Type: application/json');
   echo json_encode($log);
   return;
-}
-$WHERE = "";
-$WHEREIsActive = false;
-if (!empty($engine)) {
-  $WHEREIsActive = true;
-  $sql = "SELECT id FROM engines WHERE name ='" . $engine . "'";
-  $res = $pdo->query($sql);
-  $result = $res->fetch();
-  $engine_id = $result[0];
-  $WHERE = "WHERE engine_id = '" . $engine_id . "'";
-}
-
-if (!empty($device)) {
-  $sql = "SELECT id FROM medias WHERE name ='" . $device . "'";
-  $res = $pdo->query($sql);
-  $result = $res->fetch();
-  $device_id = $result[0];
-
-  if ($WHEREIsActive) { // Début
-    $WHERE = $WHERE . " AND ";
-  } else { //A faire sur les trois autres qui suivent.
-    $WHERE = " WHERE ";
-  }
-  $WHERE = $WHERE . " media_id = '" . $device_id . "'"; //Fin
-}
-if (!empty($status)) {
-  $sql = "SELECT id FROM status WHERE value ='" . $status . "'";
-  $res = $pdo->query($sql);
-  $result = $res->fetch();
-  $status_id = $result[0];
-  if ($WHEREIsActive) { // Début
-    $WHERE = $WHERE . " AND ";
-  } else { //A faire sur les trois autres qui suivent.
-    $WHERE = " WHERE ";
-  }
-  $WHERE = $WHERE . " status_id = '" . $status_id . "'"; //Fin
-}
-
-if (!empty($type)) {
-  $sql = "SELECT id FROM games_categories WHERE name ='" . $type . "'";
-  $res = $pdo->query($sql);
-  $result = $res->fetch();
-  $type_id = $result[0];
-
-  if ($WHEREIsActive) { // Début
-    $WHERE = $WHERE . " AND ";
-  } else { //A faire sur les trois autres qui suivent.
-    $WHERE = " WHERE ";
-  }
-  $WHERE = $WHERE . " category_id = '" . $type_id . "'"; //Fin
-}
-$ORDERBY = "";
-$isOrderBy = false;
-if (!empty($weight)) {
-  $isOrderBy = true;
-  $ORDERBY = " ORDER BY weight " . $weight;
-}
-if (!empty($delivery_date)) {
-  if ($isOrderBy) {
-    $ORDERBY = $ORDERBY . ", delivery_date " . $delivery_date;
-  } else {
-    $ORDERBY = " ORDER BY delivery_date " . $delivery_date;
-  }
 }
 $sql = "SELECT * FROM games ";
 $sql = $sql . $WHERE;

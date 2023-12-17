@@ -172,6 +172,11 @@ const getTopParent = (element, pattern) => {
 const clickGame = (e) => {
   console.log("current target html : " + e.currentTarget.innerHTML);
   console.log("target html : " + e.target.innerHTML);
+  let email = document.getElementById("email-user");
+  if (email === undefined || email === null || email.innerHTML === "") {
+    visualizeGameDetails(e);
+    return;
+  }
 
   if (e.target.innerHTML === "") {
     console.log("current target html : " + e.currentTarget.innerHTML);
@@ -545,6 +550,56 @@ function formatDate(date) {
 }
 
 const fetchAllVideoGames = async () => {
+  let select_delivery_date = document.getElementById("select-delivery-date");
+  let delivery_date = "";
+  if (
+    !isNullOrUndefined(select_delivery_date) &&
+    select_delivery_date.selectedIndex !== 0
+  ) {
+    delivery_date =
+      select_delivery_date.options[select_delivery_date.selectedIndex].text;
+    delivery_date = delivery_date === "Ascendant" ? "ASC" : "DESC";
+    console.log("Delivery date is " + delivery_date);
+  }
+
+  let select_status = document.getElementById("select-statut");
+  let status = "";
+  if (!isNullOrUndefined(select_status) && select_status.selectedIndex !== 0) {
+    status = select_status.options[select_status.selectedIndex].text;
+    console.log("Status is " + status);
+  }
+
+  let select_weight = document.getElementById("select-weight");
+  let weight = "";
+  if (!isNullOrUndefined(select_weight) && select_weight.selectedIndex !== 0) {
+    weight = select_weight.options[select_weight.selectedIndex].text;
+    weight = weight === "Ascendant" ? "ASC" : "DESC";
+    console.log("Weight is " + weight);
+  }
+
+  let select_engine = document.getElementById("select-engine");
+  let engine = "";
+  if (!isNullOrUndefined(select_engine) && select_engine.selectedIndex !== 0) {
+    engine = select_engine.options[select_engine.selectedIndex].text;
+    console.log("Engine is " + engine);
+  }
+
+  let select_category = document.getElementById("select-category");
+  let type = "";
+  if (
+    !isNullOrUndefined(select_category) &&
+    select_category.selectedIndex !== 0
+  ) {
+    type = select_category.options[select_category.selectedIndex].text;
+    console.log("Type is " + type);
+  }
+
+  let select_media = document.getElementById("select-device");
+  let media = "";
+  if (!isNullOrUndefined(select_media) && select_media.selectedIndex !== 0) {
+    media = select_media.options[select_media.selectedIndex].text;
+    console.log("Media is " + media);
+  }
   console.log("Executing fetchallvideogames");
   const listVideoContainer = document.getElementById("videoListContainer");
   listVideoContainer.innerHTML = `<div style="display:flex; flex-direction:column; align-items:center; justify-content; center; margin-top: 350px; width:100%; height:100%; font-size:12pt; color:yellow;">
@@ -552,7 +607,14 @@ const fetchAllVideoGames = async () => {
           Loading please wait...
           <div class="lds-dual-ring"></div>
     </div>`;
-  const data = {};
+  const data = {
+    media: media,
+    category: type,
+    engine: engine,
+    weight: weight,
+    status: status,
+    delivery_date: delivery_date,
+  };
   const fetchedGames = await fetch("fetchVideoGames.php", {
     method: "POST",
     body: JSON.stringify(data),
@@ -601,64 +663,6 @@ const fetchAllVideoGames = async () => {
       videoToastElement.style.alignItems = "center";
       videoToastElement.style.justifyContent = "center";
       videoToastElement.style.width = "100%";
-
-      const eyeStarContainer = document.createElement("div");
-      eyeStarContainer.id = "eye-star-container-" + index;
-      eyeStarContainer.className = "eyeStarContainer";
-      let eyeButton = document.createElement("div");
-      eyeButton.className = "eyeButton";
-      eyeButton.id = "eye-button-" + index;
-
-      eyeButton.innerHTML = `<div id="eye-div-${index}" style="display:flex; justify-content:center;">
-        <div id="eye-div-title-${index}" hidden> ${row["title"]} </div>
-        <div id="eye-div-description-${index}" hidden> ${row["description"]}</div>
-        <div id="eye-div-category-${index}" hidden> ${row["category"]}</div>
-        <div id="eye-div-engine-${index}" hidden> ${row["engine"]}</div>
-        <div id="eye-div-status-${index}" hidden> ${row["status"]}</div>
-        <div id="eye-div-media-${index}" hidden> ${row["media"]}</div>
-        <div id="eye-div-weight-${index}" hidden> ${row["weight"]}</div>
-        <div id="eye-div-players-${index}" hidden>${row["players"]}</div>
-        <div id="eye-div-creation-date-${index}" hidden> ${row["creation_date"]}</div>
-        <div id="eye-div-delivery-date-${index}" hidden> ${row["delivery_date"]}</div>
-        <div id="eye-div-blob-${index}" hidden> ${row["blob"]}</div>
-        <div id="eye-div-blob-name-${index}" hidden>" ${row["blob_name"]}</div>
-        <div class="magnifySvg" id="div-eye-svg-${index}">
-          <svg id="eye-svg-${index}" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path id="eye-path-${index}-0" d="M15.0007 12C15.0007 13.6569 13.6576 15 12.0007 15C10.3439 15 9.00073 13.6569 9.00073 12C9.00073 10.3431 10.3439 9 12.0007 9C13.6576 9 15.0007 10.3431 15.0007 12Z" stroke="#ffff00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          <path id="eye-path-${index}-1" d="M12.0012 5C7.52354 5 3.73326 7.94288 2.45898 12C3.73324 16.0571 7.52354 19 12.0012 19C16.4788 19 20.2691 16.0571 21.5434 12C20.2691 7.94291 16.4788 5 12.0012 5Z" stroke="#ffff00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        </div>`;
-
-      let starButton = document.createElement("div");
-      starButton.id = "star-button-" + index;
-      starButton.className = "starButton";
-
-      if (!row["favorite"]) {
-        starButton.innerHTML = `<div id="star-div-${index}" style="display:flex; justify-content:center;">
-            <span id="favorite-state-${index}" hidden >${row["favorite"]}</span>
-            <span id="title-${index}" hidden >${row["title"]}</span>
-            <div class="magnifySvg" id="div-star-svg-${index}">
-              <svg id="star-svg-${index}" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-star" style="color:yellow;" viewBox="0 0 16 16">
-                <path id="star-path-${index}" d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
-              </svg>
-            </div>
-        </div>`;
-      } else {
-        starButton.innerHTML = `<div id="star-div-${index}" style="display:flex; justify-content:center;" >
-            <span id="favorite-state-${index}" hidden >${row["favorite"]}</span>
-            <span id="title-${index}" hidden >${row["title"]}</span>
-            <div class="magnifySvg" id="div-star-svg-${index}">
-              <svg id="star-svg-${index}" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-star-fill" style="color:yellow;" viewBox="0 0 16 16">
-                <path id="star-path-${index}" d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-              </svg>
-            </div>
-        </div>`;
-      }
-
-      eyeStarContainer.appendChild(eyeButton);
-      eyeStarContainer.appendChild(starButton);
-      videoToastElement.appendChild(eyeStarContainer);
 
       let content = `<table class="videoToast-dashTable" style="justify-content:center; align-items:center;">
                 <thead>
