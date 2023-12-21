@@ -44,15 +44,18 @@ function getEmail()
   <ul class="homeNavBar">
     <li><a href="index.php">Accueil</a></li>
     <?php
-    if (!is_null($user_email)) {
-      echo <<<EOL
-       <li><a href="userProfile.php">Mon Profil</a></li>
-      EOL;
-    } else {
-      echo <<<EOL
-        <li><a href="registerPage.php">M'enregistrer</a></li>
-        <li><a href="loginPage.php">Me connecter</a></li>
-        EOL;
+    if (is_null($user_name) && is_null($user_email)) {
+      echo "<li><a href=\"registerPage.php\">M'enregistrer</a></li>\
+            <li><a href=\"loginPage.php\">Me connecter</a></li>";
+    }
+    if (!is_null($user_name) && !is_null($user_email)) {
+      echo "<li><a href=\"userProfile.php\">Mon Profil</a></li>";
+      if (!is_null($role) && !strcmp($role, "admin")) {
+        echo "<li><a href=\"adminDashboard.php\">Tableau de Bord Admin</a></li>";
+      }
+      if (!is_null($role) && !strcmp($role, "manager")) {
+        echo "<li><a href=\"managerDashboard.php\">Tableau de Bord Manager</a></li>";
+      }
     }
     ?>
   </ul>

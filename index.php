@@ -74,6 +74,9 @@ echo "email " . is_null($user_email) . "\n";
       if (!is_null($role) && !strcmp($role, "admin")) {
         echo "<li><a href=\"adminDashboard.php\">Tableau de Bord Admin</a></li>";
       }
+      if (!is_null($role) && !strcmp($role, "manager")) {
+        echo "<li><a href=\"managerDashboard.php\">Tableau de bord Manager</a></li>";
+      }
     }
     ?>
 
