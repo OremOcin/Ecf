@@ -66,7 +66,7 @@ echo "email " . is_null($user_email) . "\n";
 
     <?php
     if (is_null($user_name) && is_null($user_email)) {
-      echo "<li><a href=\"registerPage.php\">M'enregistrer</a></li>\
+      echo "<li><a href=\"registerPage.php\">M'enregistrer</a></li>
             <li><a href=\"loginPage.php\">Me connecter</a></li>";
     }
     if (!is_null($user_name) && !is_null($user_email)) {

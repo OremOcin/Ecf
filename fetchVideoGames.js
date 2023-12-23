@@ -157,7 +157,7 @@ const toggleFavorite = () => {
     fetchFavoriteGames(data);
     return;
   }
-  fetchGames();
+  fetchUserGames();
 };
 
 const getTopParent = (element, pattern) => {
@@ -261,7 +261,7 @@ const clickGame = (e) => {
       fetchFavoriteGames(data);
       return;
     }
-    fetchGames();
+    fetchUserGames();
   }
 };
 
@@ -312,7 +312,7 @@ const visualizeGameDetails = (e) => {
   document.getElementById("blob-filename").value = filename;
 };
 
-const fetchGames = async () => {
+const fetchUserGames = async () => {
   let select_delivery_date = document.getElementById("select-delivery-date");
   let delivery_date = "";
   if (
@@ -388,7 +388,7 @@ const fetchGames = async () => {
           Loading please wait...
           <div class="lds-dual-ring"></div>
     </div>`;
-  console.log("fetchGames data = " + JSON.stringify(data));
+  console.log("fetchUserGames data = " + JSON.stringify(data));
 
   const fetchedGames = await fetch("fetchVideoGames.php", {
     method: "POST",
