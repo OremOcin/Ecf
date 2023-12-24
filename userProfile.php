@@ -16,6 +16,14 @@ $user_email = array_key_exists("email", $_SESSION) ? $_SESSION["email"] : null;
 echo "role " . is_null($role) . "\n";
 echo "username " . is_null($user_name) . "\n";
 echo "email " . is_null($user_email) . "\n";
+if (is_null($user_email) && is_null($role)) {
+  echo <<<EOL
+   <script>
+   window.location = "./forbiddenAccess.html";
+   </script>
+  EOL;
+  return;
+}
 ?>
 
 <body id="userProfileBody">

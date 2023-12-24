@@ -8,10 +8,9 @@ echo "username " . is_null($user_name) . "\n";
 echo "email " . is_null($user_email) . "\n";
 if (is_null($user_email) || is_null($role) || strcmp($role, "admin") != 0) {
   echo <<<EOL
-   <!DOCTYPE html>
-   <html lang="en">
-   <object name="forbiddenAccess" type="text/html" data="forbiddenAccess.html"></object>
-   </html>
+   <script>
+   window.location = "./forbiddenAccess.html";
+   </script>
   EOL;
   return;
 }
