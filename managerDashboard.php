@@ -18,6 +18,7 @@ if (is_null($user_email) || is_null($role) || strcmp($role, "manager") != 0) {
   <title>Document</title>
   <link rel="stylesheet" href="managerDashboard.css">
   <script src="managerDashboard.js"></script>
+  <script src="logout.js"></script>
 </head>
 
 <?php

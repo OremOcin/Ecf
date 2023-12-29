@@ -26,6 +26,7 @@ if (is_null($user_email) || is_null($role) || strcmp($role, "admin") != 0) {
   <script src="updateGameDetails.js"></script>
   <script src="getImageBinaryContent.js"></script>
   <script src="adminDashboard.js"></script>
+  <script src="logout.js"></script>
 </head>
 
 <body id="adminDashboardBody">

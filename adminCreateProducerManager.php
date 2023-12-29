@@ -26,7 +26,7 @@ if (is_null($user_email) || is_null($role) || strcmp($role, "admin") != 0) {
   <link rel="stylesheet" href="createProducer.css">
   <script src="adminCreateRole.js"></script>
   <script src="showPassword.js"></script>
-
+  <script src="logout.js"></script>
 </head>
 
 <body id="registerPageBody">
