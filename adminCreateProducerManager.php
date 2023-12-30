@@ -67,12 +67,9 @@ if (is_null($user_email) || is_null($role) || strcmp($role, "admin") != 0) {
 
   <ul class="homeNavBar">
     <li><a href="index.php">Accueil</a></li>
-    <li><a href="browseVideoGames.php">Jeux</a></li>
-    <li><a href="registerPage.php">M'enregistrer</a></li>
-    <li><a href="loginPage.php">Me connecter</a></li>
+    <li><a href="userBrowseVideoGames.php">Jeux</a></li>
     <li><a href="userProfile.php">Mon Profil</a></li>
     <li><a href="adminDashboard.php">Tableau de Bord Admin</a></li>
-    <li><a href="createProducer.php">Créer un compte Producteur/Manager</a></li>
   </ul>
 
   <div class="registerContainer">

@@ -53,7 +53,7 @@ if (is_null($user_email) || is_null($role) || strcmp($role, "manager") !== 0) {
         C433.231,457.892,418.508,472.615,400.41,472.615z\"/>
   </svg>
       </div>
-      <div style=\"padding-right:2rem;padding-left:2rem;\">
+      <div style=\"padding-right:2rem;padding-left:2rem;font-size:1.5rem;\">
      Bienvenue
      " . $user_name . "
      connecté en tant que " . $role . "
