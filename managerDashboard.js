@@ -77,8 +77,7 @@ async function fetchAllNews() {
               <div id="toast-header-title-${i}" class="toast-header-title">${allNews[i]["title"]}
               </div>
               <div id="toast-header-date-${i}" class="toast-header-date">
-                <div>${allNews[i]["date"]}
-                </div>
+                ${allNews[i]["date"]}
               </div>
           </div>
           <div id="toast-contents-${i}" class="toast-contents">

@@ -5,8 +5,9 @@
   background: url(img/crysisBlur.png);
   background-size: cover;
   background-repeat: no-repeat;
-  height: 1400px;
+  height: 150vh;
   margin: 0;
+  overflow-y: auto;
 }
 
 
@@ -82,7 +83,8 @@ li a:hover {
 
 .flex-container {
   display: flex;
-  height: 95%;
+  height: 100vh;
+  overflow-y: auto;
   background-color: transparent;
 }
 
@@ -173,12 +175,12 @@ li a:hover {
 
 .toast {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   text-align: center;
   justify-content: center;
   width: 100%;
   border-radius: 5px;
-  height: 250px;
+  height: 300px;
   color: rgba(0, 0, 0, 0.664);
   box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.536);
   font-size: 20pt;
@@ -327,11 +329,10 @@ li a:hover {
   .toast-header-date {
     display: flex;
     height: 100%;
-    width: 30%;
     text-align: right;
     align-items: center;
-    font-size: 0.95rem;
     color: rgba(253, 253, 0, 0.598);
+    font-size: 1.5rem;
   }
 
   #newsSubmit {
@@ -372,13 +373,12 @@ li a:hover {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 50%;
-    height: 100%;
+    max-width: 50%;
+    max-height: 100%;
     background: transparent;
     color: rgba(253, 253, 0, 0.598);
     border: none;
     font-size: 15pt;
-    padding: 10px;
     overflow: hidden;
   }
 
@@ -407,9 +407,8 @@ li a:hover {
     }
   }
 
-  .screenshot {
+  .screen-shot {
     display: flex;
-    flex-direction: column;
     margin-left: 30%;
     width: 50%;
     margin: 10px;

@@ -6,7 +6,7 @@ $user_email = array_key_exists("email", $_SESSION) ? $_SESSION["email"] : null;
 echo "role " . is_null($role) . "\n";
 echo "username " . is_null($user_name) . "\n";
 echo "email " . is_null($user_email) . "\n";
-if (is_null($user_email) || is_null($role) || strcmp($role, "admin") != 0) {
+if (is_null($user_email) || is_null($role)) {
   echo <<<EOL
    <script>
    window.location = "./forbiddenAccess.html";
@@ -94,8 +94,7 @@ if (is_null($user_email) || is_null($role) || strcmp($role, "admin") != 0) {
       favoris ! Infos de développement ! Suivi de tous vos jeux ! <br>
       Discussion entre passionnés !</h1>
     <?php
-    if (!is_null($user_name) && !is_null($user_email)) {
-      echo "
+    echo "
      <div class=\"login-data\">
       <div class=\"login-data-inside-div\">
         <svg fill=\"#ffff00\" height=\"32px\" width=\"32px\" version=\"1.1\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" \
@@ -109,23 +108,28 @@ if (is_null($user_email) || is_null($role) || strcmp($role, "admin") != 0) {
         C433.231,457.892,418.508,472.615,400.41,472.615z\"/>
   </svg>
       </div>
-      <div style=\"padding-right:2rem;padding-left:2rem;\">
-      <h6>Bienvenue</h6>
-      <h6>" . $user_name . "</h6>
-      <h6>connecté en tant que " . $role . "</h6>
+      <div style=\"padding-right:2rem;padding-left:2rem;font-size:1rem;\">
+      Bienvenue
+      " . $user_name . "
+      connecté en tant que " . $role . "
       </div>
       <div id=\"sign-out\" class=\"login-data-inside-div\">
       <svg height=\"32px\" width=\"32px\" class=\"svg-icon\" style=\"vertical-align: middle;fill: #ffff00;overflow: hidden;\" viewBox=\"0 0 1024 1024\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M768 106V184c97.2 76 160 194.8 160 328 0 229.6-186.4 416-416 416S96 741.6 96 512c0-133.2 62.8-251.6 160-328V106C121.6 190.8 32 341.2 32 512c0 265.2 214.8 480 480 480s480-214.8 480-480c0-170.8-89.6-321.2-224-406z\" /><path d=\"M512 32c-17.6 0-32 14.4-32 32v448c0 17.6 14.4 32 32 32s32-14.4 32-32V64c0-17.6-14.4-32-32-32z\" /></svg>
       </div>
       </div>";
-    }
     ?>
   </header>
   <ul class="homeNavBar">
     <li><a href="index.php">Accueil</a></li>
-    <li><a href="userBrowseVideoGames.php">Les Jeux Vidéos</a></li>
+    <li><a href="userBrowseVideoGames.php">Jeux</a></li>
     <li><a href="userProfile.php">Mon Profil</a></li>
+    <?php
+    if (strcmp($role, "admin") === 0) {
+      echo <<<EOL
     <li><a href="adminCreateProducerManager.php">Créer un compte Producteur/Manager</a></li>
+    EOL;
+    }
+    ?>
   </ul>
 
 
