@@ -173,6 +173,8 @@ const clickGame = (e) => {
   console.log("current target html : " + e.currentTarget.innerHTML);
   console.log("target html : " + e.target.innerHTML);
   let email = document.getElementById("email-user");
+  console.log("email = ");
+  console.log(email);
   if (email === undefined || email === null || email.innerHTML === "") {
     visualizeGameDetails(e);
     return;
@@ -269,7 +271,8 @@ const visualizeGameDetails = (e) => {
   e.stopPropagation();
 
   let topParent = getTopParent(e.target, "eye");
-  console.log("TopParent " + topParent.innerHTML);
+  console.log("TopParent ");
+  console.log(topParent);
 
   let title = topParent.children[0].children[0].children[0].innerHTML;
   document.getElementById("title").value = title;
