@@ -13,10 +13,10 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 session_start();
-$host = '127.0.0.1';
-$root = 'root';
-$password = 'toto';
-$db = 'toto';
+$host = "127.0.0.1";
+$root = "root";
+$password = "";
+$db = "ecfdatabase";
 $dsn = "mysql:host=$host;dbname=$db";
 try {
   function GetUUID()

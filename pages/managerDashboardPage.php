@@ -24,13 +24,13 @@ if (is_null($user_email) || is_null($role) || strcmp($role, "manager") !== 0) {
   <link rel="stylesheet" href="../css/managerDashboard.css">
   <link rel="stylesheet" href="../css/responsive-navbar.css">
   <script src="../js/managerDashboard.js"></script>
-  <script src="logout.js"></script>
+  <script src="../js/logout.js"></script>
   <script src="../js/clickHamburger.js"></script>
 </head>
 
 <body id="communityManagerDashboardBody">
   <header id="indexHeader" class="index-header">
-    <img id="indexLogo" src="img/logo_gamesoft refait.png" alt="Logo de L'entreprise">
+    <img id="indexLogo" src="../img/logo_gamesoft refait.png" alt="Logo de L'entreprise">
     <h1 id="indexTitle">Bienvenue sur votre plateforme en ligne Gamesoft Studio <br> Stats et News sur
       vos jeux
       favoris ! Infos de développement ! Suivi de tous vos jeux ! <br>
@@ -51,10 +51,12 @@ if (is_null($user_email) || is_null($role) || strcmp($role, "manager") !== 0) {
         C433.231,457.892,418.508,472.615,400.41,472.615z\"/>
   </svg>
       </div>
-      <div style=\"padding-right:2rem;padding-left:2rem;font-size:1.5rem;\">
-     Bienvenue
-     " . $user_name . "
-     connecté en tant que " . $role . "
+      <div style=\"display:block;justify-content:start;padding-right:2rem;padding-left:2rem; font-size:1rem;\">
+      Bienvenue
+      " . $user_name . "
+      <br>
+      accès : " . $role . "
+      <br>
       </div>
       <div id=\"sign-out\" class=\"login-data-inside-div\">
       <svg height=\"32px\" width=\"32px\" class=\"svg-icon\" style=\"vertical-align: middle;fill: #ffff00;overflow: hidden;\" viewBox=\"0 0 1024 1024\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M768 106V184c97.2 76 160 194.8 160 328 0 229.6-186.4 416-416 416S96 741.6 96 512c0-133.2 62.8-251.6 160-328V106C121.6 190.8 32 341.2 32 512c0 265.2 214.8 480 480 480s480-214.8 480-480c0-170.8-89.6-321.2-224-406z\" /><path d=\"M512 32c-17.6 0-32 14.4-32 32v448c0 17.6 14.4 32 32 32s32-14.4 32-32V64c0-17.6-14.4-32-32-32z\" /></svg>
@@ -137,7 +139,7 @@ if (is_null($user_email) || is_null($role) || strcmp($role, "manager") !== 0) {
             <div class="screenshot">
               <div name="blob" id="blob-content" hidden></div>
               <img id="image-news-blob" style="max-width: 100%;box-shadow: 0 0 15px black;border-radius:2px; "
-                src="img/RemnantBG.png" alt="Girl in a jacket"></img>
+                src="../img/RemnantBG.png" alt="Girl in a jacket"></img>
               <input style="width:100%;" type="file" id="news-file-blob" accept=".png, .jpg, .jpeg" />
             </div>
           </li>

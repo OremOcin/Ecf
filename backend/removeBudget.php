@@ -10,23 +10,23 @@ $value = $decoded['value'];
 
 try {
   session_start();
-  $hostname = '127.0.0.1';
-  $user = 'root';
-  $password = 'toto';
-  $db = 'toto';
+  $host = "127.0.0.1";
+  $root = "root";
+  $password = "";
+  $db = "ecfdatabase";
   $dsn = "mysql:host=$host;dbname=$db";
 
   $pdo = new PDO($dsn, $root, $password);
-  $sql = "SELECT id FROM games WHERE title = '" . $title . "'";
+  $sql = "SELECT id FROM games WHERE title = '".$title."'";
   $result = $pdo->query($sql)->fetch();
-  if (!is_array($result) || count($result) == 0) {
+  if(!is_array($result) || count($result) == 0) {
     $log = ['response' => 'removing budget error : game not found'];
     $pdo = null;
     header('Access-Control-Allow-Origin: *');
     header('Content-Type: application/json');
     echo json_encode($log);
-    return;
-  }
+    return; 
+  } 
   $game_id = $result["id"];
   $sql = "DELETE FROM budgets WHERE id = (SELECT budgets.id FROM budgets ";
   $sql .= "JOIN games_budgets ";

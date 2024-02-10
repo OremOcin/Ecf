@@ -47,11 +47,11 @@ $user_email = array_key_exists("email", $_SESSION) ? $_SESSION["email"] : null;
         C433.231,457.892,418.508,472.615,400.41,472.615z\"/>
   </svg>
       </div>
-      <div style=\"padding-right:2rem;padding-left:2rem; font-size:1rem;\">
+      <div style=\"display:block;justify-content:start;padding-right:2rem;padding-left:2rem; font-size:1rem;\">
       Bienvenue
       " . $user_name . "
       <br>
-      connecté en tant que " . $role . "
+      accès : " . $role . "
       <br>
       </div>
       <div id=\"sign-out\" class=\"login-data-inside-div\">
@@ -130,11 +130,6 @@ $user_email = array_key_exists("email", $_SESSION) ? $_SESSION["email"] : null;
       clearInterval(intervalId);
       clearInterval = -1;
     };
-    /*window.addEventListener("load", (e) => {
-      intervalId = setInterval(() => {
-        fetchAllNews();
-      }, 15000);
-    });*/
     FetchAllDevGames();
     const signout = document.getElementById("sign-out");
     if (signout) {
