@@ -52,31 +52,25 @@
   margin: 10px;
   margin-right: 1rem;
   margin-left: 1rem;
+  aspect-ratio: 1/1;
 }
 
 
-#indexTitle {
+.index-title {
   height: auto;
   width: auto;
   background-color: rgba(228, 228, 228, 0.5);
   border-radius: 10px;
   text-align: center;
-  padding-top: 20px;
   margin-left: 1rem;
   margin-right: 1rem;
-  box-shadow: 0 0 5px white;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.356);
   font-family: 'Play', sans-serif;
   flex-grow: 3;
+  overflow: hidden; text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-
-.homeNavBar {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: #333;
-}
 li {
   float: left;
 }

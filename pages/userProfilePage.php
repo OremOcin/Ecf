@@ -5,10 +5,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="../css/userProfile.css">
   <link rel="stylesheet" href="../css/responsive-navbar.css">
-  <script src="../js/managerDashboard.js"></script>
-  <script src="../js/logout.js"></script>
+  <script src="../js/updateProfile.js"></script>
+  <script src="logout.js"></script>
   <script src="../js/clickHamburger.js"></script>
 </head>
 
@@ -17,17 +17,23 @@ session_start();
 $role = array_key_exists("role", $_SESSION) ? $_SESSION["role"] : null;
 $user_name = array_key_exists("username", $_SESSION) ? $_SESSION["username"] : null;
 $user_email = array_key_exists("email", $_SESSION) ? $_SESSION["email"] : null;
+if (is_null($user_email) && is_null($role)) {
+  echo <<<EOL
+   <script>
+   window.location = "./forbiddenAccess.html";
+   </script>
+  EOL;
+  return;
+}
+echo <<<EOL
+<div id="user-email" hidden>$user_email</div>
+EOL;
 ?>
 
-<body id="indexBody">
-  <script>
-    var intervalId = -1;
-  </script>
-
+<body id="userProfileBody">
   <header id="indexHeader" class="index-header">
     <img id="indexLogo" src="img/logo_gamesoft refait.png" alt="Logo de L'entreprise">
-    <h1 class="index-title" id="indexTitle">Bienvenue sur votre plateforme en ligne Gamesoft Studio <br> Stats et News
-      sur
+    <h1 id="indexTitle">Bienvenue sur votre plateforme en ligne Gamesoft Studio <br> Stats et News sur
       vos jeux
       favoris ! Infos de développement ! Suivi de tous vos jeux ! <br>
       Discussion entre passionnés !</h1>
@@ -47,12 +53,10 @@ $user_email = array_key_exists("email", $_SESSION) ? $_SESSION["email"] : null;
         C433.231,457.892,418.508,472.615,400.41,472.615z\"/>
   </svg>
       </div>
-      <div style=\"padding-right:2rem;padding-left:2rem; font-size:1rem;\">
-      Bienvenue
-      " . $user_name . "
-      <br>
-      connecté en tant que " . $role . "
-      <br>
+      <div id=\"login-data-div\" style=\"padding-right:2rem;padding-left:2rem;\">
+      <h6>Bienvenue</h6>
+      <h6> <div id=\"user-name-div\">" . $user_name . "</div> </h6> 
+      <h6>connecté en tant que " . $role . "</h6>
       </div>
       <div id=\"sign-out\" class=\"login-data-inside-div\">
       <svg height=\"32px\" width=\"32px\" class=\"svg-icon\" style=\"vertical-align: middle;fill: #ffff00;overflow: hidden;\" viewBox=\"0 0 1024 1024\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M768 106V184c97.2 76 160 194.8 160 328 0 229.6-186.4 416-416 416S96 741.6 96 512c0-133.2 62.8-251.6 160-328V106C121.6 190.8 32 341.2 32 512c0 265.2 214.8 480 480 480s480-214.8 480-480c0-170.8-89.6-321.2-224-406z\" /><path d=\"M512 32c-17.6 0-32 14.4-32 32v448c0 17.6 14.4 32 32 32s32-14.4 32-32V64c0-17.6-14.4-32-32-32z\" /></svg>
@@ -61,24 +65,26 @@ $user_email = array_key_exists("email", $_SESSION) ? $_SESSION["email"] : null;
     }
     ?>
   </header>
+
   <ul id="home-navbar" class="homeNavBar" style="display:flex;">
     <div id="hamburger" class="hamburger">
       <li><img src="../img/hamburger.svg" alt=""></li>
     </div>
     <script>document.getElementById("hamburger").addEventListener("click", clickHamburger);</script>
     <div id="responsive-navbar" class="responsive-navbar" style="display:flex;">
-      <li><a href="./pages/userBrowseVideoGamesPage.php">Jeux</a></li>
+      <li><a href="../index.php">Accueil</a></li>
+      <li><a href="userBrowseVideoGamesPage.php">Jeux</a></li>
       <?php
       if (is_null($user_name) && is_null($user_email)) {
-        echo "<li><a href=\"../pages/registerPage.php\">M'enregistrer</a></li>
-            <li><a href=\"../pages/loginPage.php\">Me connecter</a></li>";
-      }
-      if (!is_null($user_name) && !is_null($user_email) && !is_null($role)) {
-        echo "<li><a href=\"../pages/userProfilePage.php\">Mon Profil</a></li>";
-        if (strcmp($role, "admin") === 0 || strcmp($role, "producer") === 0) {
-          echo "<li><a href=\"./pages/adminDashboardPage.php\">Tableau de Bord</a></li>";
-        } else if (strcmp($role, "manager") === 0) {
-          echo "<li><a href=\"../pages/managerDashboardPage.php\">Tableau de Bord</a></li>";
+        echo "<li><a href=\"registerPage.php\">M'enregistrer</a></li>
+            <li><a href=\"loginPage.php\">Me connecter</a></li>";
+      } else {
+        if (!is_null($role)) {
+          if (strcmp($role, "admin") === 0 || strcmp($role, "admin") === 0) {
+            echo "<li><a href=\"adminDashboardPage.php\">Tableau de Bord</a></li>";
+          } else if (strcmp($role, "manager") === 0) {
+            echo "<li><a href=\"managerDashboardPage.php\">Tableau de Bord</a></li>";
+          }
         }
       }
       ?>
@@ -104,42 +110,61 @@ $user_email = array_key_exists("email", $_SESSION) ? $_SESSION["email"] : null;
       }
     });
   </script>
-  <div class="mainContainer">
-    <div class="presentationContainer">
-      <div class="presentationBox">
-        <h1 class="presentationHeader">PRESENTATION</h1>
-        <p class="presentationText">Gamesoft est une société spécialisée dans le développement de jeux vidéos sur PC et
-          Xboite Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo ipsum aut reiciendis accusantium
-          cupiditate maiores in accu
-          samus delectus iure consequuntur! Iste ipsum vitae natus doloremque quod a perferendis nihil nisi.</p>
-      </div>
+  <div class="formContainer">
+    <div class="verticalEmptyContainer"></div>
+    <div class="formUserProfile">
+      <form>
+
+        <div class="svgContainer">
+          <div id="imageResize" height="100%" width="100%" style="display:flex; flex-direction: column;">
+            <img id="image-avatar-blob" style="max-width: 100%;box-shadow: 0 0 15px black;border-radius:2px; "
+              src="img/avatar.svg" alt="Girl in a jacket"></img>
+            <div id="blob-content" hidden></div>
+            <input id="avatar" class="avatarInput" type="file">
+          </div>
+        </div>
+        <ul class="wrapper">
+          <li class="form-row">
+            <label for="pseudoInput">Pseudo
+              <input id="pseudo" name="pseudoInput" class="pseudoInput" type="text" required>
+            </label>
+          </li>
+          <li class="form-row">
+            <label for="firstNameInput">Prénom
+              <input id="firstName" name="firstNameInput" type="text" required>
+            </label>
+          </li>
+          <li class="form-row">
+            <label for="lastNameInput">Nom
+              <input id="lastName" name="lastNameInput" type="text" required>
+            </label>
+          </li>
+          <li class="form-row">
+            <label for="emailInput">Email
+              <input id="email" name="emailInput" type="email" required>
+            </label>
+          </li>
+          <li class="form-row">
+            <label for="newPwd">Nouveau Mot de Passe
+              <input id="password" name="newPwd" type="password" value="" required>
+            </label>
+          </li>
+          <li class="form-row">
+            <button id="updateProfile" type="button">Confirmer</button>
+          </li>
+        </ul>
+      </form>
     </div>
-    <div class="lastNewsContainer">
-      <div class="headerText">FIL D'ACTUALITES</div>
-      <div id="news-container" class="lastNewsList"></div>
-    </div>
-    <div class="gamesInDevContainer">
-      <div class="headerText presentationText">JEUX EN DEVELOPPEMENT</div>
-      <div id="games-dev-container" class="gamesInDevList"></div>
-    </div>
+    <div class="verticalEmptyContainer"></div>
   </div>
   <script>
-    fetchAllNews();
-    console.log("intervalId before = " + intervalId);
-    window.onbeforeunload = function (event) {
-      clearInterval(intervalId);
-      clearInterval = -1;
-    };
-    /*window.addEventListener("load", (e) => {
-      intervalId = setInterval(() => {
-        fetchAllNews();
-      }, 15000);
-    });*/
-    FetchAllDevGames();
+    document.getElementById("avatar").addEventListener("change", getBlob);
+    document.getElementById("updateProfile").addEventListener("click", updateProfile);
     const signout = document.getElementById("sign-out");
     if (signout) {
       signout.addEventListener("click", logout);
     }
+    fetchUserProfile();
   </script>
 </body>
 
