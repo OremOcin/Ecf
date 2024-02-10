@@ -1,17 +1,12 @@
 <?php
 
-$CLEARDB_DATABASE_URL = 'mysql://root:bi1MqEy6wwdk5TwQOvlleCRGLsPmzecJ@3yndg5.stackhero-network.com/root?useSSL=true&requireSSL=true';
+$CLEARDB_DATABASE_URL = 'mysql://toto:toto@toto/root?useSSL=true&requireSSL=true';
 $url = parse_url($CLEARDB_DATABASE_URL);
 $server = $url["host"];
 $username = $url["user"];
 $password = $url["pass"];
 $db = substr($url["path"], 1);
 $dbname = "ecfdatabase";
-
-echo ("server   " . $server . "\n");
-echo ("username " . $username . "\n");
-echo ("password " . $password . "\n");
-echo ("db       " . $dbname . "\n");
 $dbns = 'mysql:host=' . $server . ';dbname=' . $dbname;
 
 echo ("dbns     " . $dbns . "\n");
