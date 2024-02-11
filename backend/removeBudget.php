@@ -10,10 +10,10 @@ $value = $decoded['value'];
 
 try {
   session_start();
-  $host = "127.0.0.1";
-  $root = "root";
-  $password = "";
-  $db = "ecfdatabase";
+  $host = "toto";
+  $root = "toto";
+  $password = "toto";
+  $db = "toto";
   $dsn = "mysql:host=$host;dbname=$db";
 
   $pdo = new PDO($dsn, $root, $password);

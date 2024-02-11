@@ -13,10 +13,10 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 session_start();
-$hostname = '3yndg5.stackhero-network.com';
-$user = 'root';
-$password = 'bi1MqEy6wwdk5TwQOvlleCRGLsPmzecJ';
-$database = 'ecfdatabase';
+$hostname = 'toto';
+$user = 'toto';
+$password = 'toto';
+$database = 'toto';
 
 $dsn = "mysql:host=$hostname;dbname=$database";
 

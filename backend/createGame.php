@@ -10,10 +10,10 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 session_start();
-$hostname = '3yndg5.stackhero-network.com';
-$user = 'root';
-$password = 'bi1MqEy6wwdk5TwQOvlleCRGLsPmzecJ';
-$database = 'ecfdatabase'; // Vous ne devez pas utiliser la base de données "root". Ceci est juste pour l'exemple. La méthode recommandée est de créer une base de données dédiée (et un utilisateur) dans PhpMyAdmin et de l'utiliser ensuite ici.
+$hostname = 'toto';
+$user = 'toto';
+$password = 'toto';
+$database = 'toto'; // Vous ne devez pas utiliser la base de données "root". Ceci est juste pour l'exemple. La méthode recommandée est de créer une base de données dédiée (et un utilisateur) dans PhpMyAdmin et de l'utiliser ensuite ici.
 
 $dsn = "mysql:host=$hostname;dbname=$database";
 
