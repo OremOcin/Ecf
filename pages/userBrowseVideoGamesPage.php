@@ -186,9 +186,6 @@ function getEmail()
               <div
                 style="display:flex; align-items:center; justify-content: center; ; width:50%; font-size:16pt; color: yellow; text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.306); background: transparent;  box-shadow: 0 0 15px rgba(61, 61, 61, 0.303); border-radius: 5px ; font-family:'Play', sans-serif; ; text-align:center; vertical-align:middle;overflow:auto"
                 id="blob_filename"></div>
-              <script type="text/javascript">
-                document.getElementById("video-game-blob").addEventListener("change", getBlob);
-              </script>
             </div>
             <li id="video-game-device" class="form-row">
               <label id="labelModified" for="device">Support</label>

@@ -13,12 +13,13 @@ const fetchFavoriteGames = async (data) => {
       Accept: "application/json",
     },
   })
-    .catch((error) => {
-      console.log("adminFetchVideoGames error doFetch " + error);
-    })
     .then((result) => {
       return result.json();
+    })
+    .catch((error) => {
+      console.log("adminFetchVideoGames error doFetch " + error);
     });
+  console.log("fetch games ", fetchedGames);
   const response =
     fetchedGames["response"] !== null && fetchedGames["response"] !== undefined;
   if (response) {

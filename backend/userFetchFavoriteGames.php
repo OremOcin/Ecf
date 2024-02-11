@@ -18,17 +18,24 @@ $database = 'ecfdatabase'; // Vous ne devez pas utiliser la base de données "ro
 $dsn = "mysql:host=$hostname;dbname=$database";
 
 $options = array(
-    // See below if you have an error like "Uncaught PDOException: PDO::__construct(): SSL operation failed with code 1. OpenSSL Error messages: error:0A000086:SSL routines::certificate verify failed".
+  // See below if you have an error like "Uncaught PDOException: PDO::__construct(): SSL operation failed with code 1. OpenSSL Error messages: error:0A000086:SSL routines::certificate verify failed".
   PDO::MYSQL_ATTR_SSL_CAPATH => '/etc/ssl/certs/',
-    // PDO::MYSQL_ATTR_SSL_CA => 'isrgrootx1.pem',
+  // PDO::MYSQL_ATTR_SSL_CA => 'isrgrootx1.pem',
   PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => true,
 );
 $pdo = new PDO($dsn, $user, $password, $options);
-$sql = "SELECT id FROM users WHERE email ='$email' ";
-$res = $pdo->query($sql);
-$result = $res->fetch();
-if (!is_array($result)) {
-
+$pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+$sql = "SELECT id FROM users WHERE email = :email ";
+$prepared = $pdo->prepare($sql);
+$prepared->bindParam('email', $email, PDO::PARAM_STR);
+$prepared->execute();
+$ids = [];
+foreach ($prepared as $id) {
+  array_push($ids, $id);
+}
+$user_id = $ids[0]['id'];
+if (!$prepared || is_null($user_id) || !isset($user_id)) {
   $log = ['response' => "L'utilisateur n'existe pas"];
   $pdo = null;
   header('Access-Control-Allow-Origin: *');
@@ -36,10 +43,7 @@ if (!is_array($result)) {
   echo json_encode($log);
   return;
 }
-$user_id = $result[0];
 
-// check table not empty
-//
 $sql = "SELECT EXISTS (SELECT 1 FROM games) AS Output";
 $res = $pdo->query($sql);
 $result = $res->fetch();

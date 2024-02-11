@@ -64,12 +64,38 @@ if (is_null($user_email) || is_null($role) || strcmp($role, "admin") != 0) {
     ?>
   </header>
 
-  <ul class="homeNavBar">
-    <li><a href="../index.php">Accueil</a></li>
-    <li><a href="userBrowseVideoGamesPage.php">Jeux</a></li>
-    <li><a href="userProfilePage.php">Mon Profil</a></li>
-    <li><a href="adminDashboardPage.php">Tableau de Bord Admin</a></li>
+  <ul id="home-navbar" class="homeNavBar" style="display:flex;">
+    <div id="hamburger" class="hamburger">
+      <li><img src="../img/hamburger.svg" alt=""></li>
+    </div>
+    <script>document.getElementById("hamburger").addEventListener("click", clickHamburger);</script>
+    <div id="responsive-navbar" class="responsive-navbar" style="display:flex;">
+      <li><a href="../index.php">Accueil</a></li>
+      <li><a href="userBrowseVideoGamesPage.php">Jeux</a></li>
+      <li><a href="userProfilePage.php">Mon Profil</a></li>
+      <li><a href="adminDashboardPage.php">Tableau de Bord Admin</a></li>
+    </div>
   </ul>
+  <script>
+    const homeNavBar = document.getElementById("home-navbar");
+    const navbar = document.getElementById("responsive-navbar");
+    window.addEventListener("resize", (e) => {
+      if (window.screen.width >= 600) {
+        navbar.style.display = "flex";
+        navbar.style.flexDirection = "row";
+        homeNavBar.style.display = "flex";
+        homeNavBar.style.flexDirection = "row";
+        homeNavBar.style.justifyContent = "";
+        homeNavBar.style.alignItems = "";
+      } else {
+        navbar.style.display = "none";
+        navbar.style.flexDirection = "column";
+        homeNavBar.style.flexDirection = "column";
+        homeNavBar.style.justifyContent = "start";
+        homeNavBar.style.alignItems = "start";
+      }
+    });
+  </script>
 
   <div class="registerContainer">
 
