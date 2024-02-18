@@ -19,19 +19,16 @@ const fetchFavoriteGames = async (data) => {
     .catch((error) => {
       console.log("adminFetchVideoGames error doFetch " + error);
     });
-  console.log("fetch games ", fetchedGames);
   const response =
     fetchedGames["response"] !== null && fetchedGames["response"] !== undefined;
   if (response) {
     alert(fetchedGames["response"]);
     return;
   }
-  console.log(JSON.stringify(fetchedGames["response"]));
   let found =
     fetchedGames["games"] !== null &&
     fetchedGames["games"] !== undefined &&
     fetchedGames["games"].length !== 0;
-  console.log("found is " + found);
   if (!found) {
     listVideoContainer.innerHTML =
       '<div style="display:flex; flex-direction:column; align-items:center; justify-content:center; width:100%; height:100%; font-size:15pt; color:yellow;" >\
@@ -48,7 +45,6 @@ const fetchFavoriteGames = async (data) => {
   } else {
     listVideoContainer.innerHTML = "";
     let maxIndex = fetchedGames["games"].length - 1;
-    console.log("Max index = " + maxIndex);
     let i = 0,
       index = 0;
     for (i; i <= maxIndex; i++) {
@@ -106,23 +102,23 @@ const fetchFavoriteGames = async (data) => {
             </div>
         </div>`;
 
-      let content = `<table class="videoToast-dashTable">
-              <thead>
-                  <tr>
-                    <th>Titre</th>
-                    <th>Date de création</th>
+      let content = `<table id="star-videoToast-dashTable" class="videoToast-dashTable">
+              <thead id="star-table-thead-${index}">
+                  <tr id="star-table-tr-${index}">
+                    <th id="star-table-th-title-${index}">Titre</th>
+                    <th id="star-table-th-creation-date-${index}">Date de création</th>
                   </tr>
               </thead>
-              <tbody>
-                <tr class="videoToast-dashTable-content" >
-                    <td id="title_${index}">  ${row["title"]}</td>
-                    <td>${row["delivery_date"]}</td>
+              <tbody id="star-table-tbody-${index}">
+                <tr id="star-table-tr-content-${index}" class="videoToast-dashTable-content" >
+                    <td id="star-table-td-title-${index}">  ${row["title"]}</td>
+                    <td id="star-table-td-delivery-date-${index}">${row["delivery_date"]}</td>
                 </tr>
               </tbody>
             </table>
         </div>
-        <div class="screenshot">
-          <img id="screenshot#_${index}" style="max-width: 100%;box-shadow: 0 0 15px black;border-radius:2px; " src="${row["blob"]}" alt="Girl in a jacket">
+        <div id="star-div-screenshot-${index}" class="screenshot">
+          <img id="star-img-src-${index}" style="max-width: 100%;box-shadow: 0 0 15px black;border-radius:2px; " src="${row["blob"]}" alt="Girl in a jacket">
         </div>`;
       if (index != maxIndex) {
         content += `<div class="videoListVerticalSpace"></div>`;
@@ -144,17 +140,14 @@ const fetchFavoriteGames = async (data) => {
 const toggleFavorite = () => {
   let checkbox = document.getElementById("toggle-btn");
   let toggled = checkbox.checked;
-  console.log("Checkbox is checked " + toggled);
+
   document.getElementById("toggle-state").innerHTML = toggled
     ? "false"
     : "true";
 
   if (toggled) {
     let email = document.getElementById("email-user");
-    console.log("Email is " + email.innerHTML);
     const data = { email: email.innerHTML };
-    console.log(JSON.stringify(data));
-
     fetchFavoriteGames(data);
     return;
   }
@@ -162,8 +155,7 @@ const toggleFavorite = () => {
 };
 
 const getTopParent = (element, pattern) => {
-  console.log("Element node name " + element.getAttribute("id"));
-  if (!element.parentElement.getAttribute("id").includes(pattern)) {
+  if (!element.getAttribute("id").includes(pattern)) {
     return element;
   }
   element = element.parentElement;
@@ -171,50 +163,28 @@ const getTopParent = (element, pattern) => {
 };
 
 const clickGame = (e) => {
-  console.log("current target html : " + e.currentTarget.innerHTML);
-  console.log("target html : " + e.target.innerHTML);
+  e.stopPropagation();
   let email = document.getElementById("email-user");
-  console.log("email = ");
-  console.log(email);
   if (email === undefined || email === null || email.innerHTML === "") {
     visualizeGameDetails(e);
     return;
   }
-
-  if (e.target.innerHTML === "") {
-    console.log("current target html : " + e.currentTarget.innerHTML);
-  }
-
   let isEyeDiv = e.target.getAttribute("id").includes("eye");
-  console.log(
-    "target Node Name : " +
-      e.target.nodeName +
-      " " +
-      e.target.getAttribute("id")
-  );
-  console.log(`Current target ${e.currentTarget.innerHTML}`);
 
   if (isEyeDiv) {
     visualizeGameDetails(e);
     return;
   } else {
-    console.log("impossible.");
-    console.log("target node name " + e.target.nodeName);
     let topParent = getTopParent(e.target, "star");
-    console.log("TopParent " + topParent.innerHTML);
-    let favoriteDiv = topParent.children[1].children[0].children[0];
-    let title = topParent.children[1].children[0].children[1].innerHTML;
-    console.log("favorite state " + favoriteDiv.innerHTML);
-    console.log("title " + title);
+    if (topParent === undefined || topParent.children.length === 0) {
+      return;
+    }
+    let favoriteDiv = topParent.children[0].children[1].children[0];
+    let title = favoriteDiv.children[1].innerHTML;
     let email = document.getElementById("email-user");
-    console.log("Click game email is : " + email.innerHTML);
     let favorite_id = favoriteDiv.getAttribute("id");
     favorite_id = favorite_id.substr(favorite_id.length - 1);
-    console.log("Favorite id is " + favorite_id);
-    console.log("Favorite html : " + favoriteDiv.innerHTML);
-    let favorite_state = document.getElementById(
-      "favorite-state-" + favorite_id
-    );
+    let favorite_state = favoriteDiv.children[0];
     let isFavorite = false;
     if (favorite_state.innerHTML === "true") {
       favorite_state.innerHTML = "false";
@@ -222,9 +192,7 @@ const clickGame = (e) => {
       favorite_state.innerHTML = "true";
       isFavorite = true;
     }
-    console.log("favorite state after " + favorite_state.innerHTML);
     let divStarSvg = document.getElementById("div-star-svg-" + favorite_id);
-    console.log("div star svg html " + divStarSvg.innerHTML);
     if (!isFavorite) {
       divStarSvg.innerHTML = `<svg id="star-svg-${favorite_id}" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-star" style="color:yellow;" viewBox="0 0 16 16">
      <path id="star-path-${favorite_id}" d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
@@ -235,7 +203,6 @@ const clickGame = (e) => {
     </svg>`;
     }
     let data = { email: email.innerHTML, fav: isFavorite, title: title };
-    console.log(JSON.stringify(data));
     const updateGameFavoriteStatus = async (data) => {
       const updateFavoriteGameStatus = await fetch(
         "../backend/userUpdateFavoriteGame.php",
@@ -253,7 +220,6 @@ const clickGame = (e) => {
         .then((result) => {
           return result.json();
         });
-      console.log("Game status " + JSON.stringify(updateFavoriteGameStatus));
       alert(JSON.stringify(updateFavoriteGameStatus["response"]));
     };
     updateGameFavoriteStatus(data);
@@ -271,9 +237,11 @@ const clickGame = (e) => {
 const visualizeGameDetails = (e) => {
   e.stopPropagation();
 
-  let topParent = getTopParent(e.target, "eye");
-  if (topParent.children[0].id.indexOf("gameData") !== -1) {
-    console.log("Found gameData");
+  let topParent = getTopParent(e.target, "gameData");
+  if (
+    topParent.children[0] !== undefined &&
+    topParent.children[0].id.indexOf("gameData") !== -1
+  ) {
     let title = topParent.children[0].innerHTML;
     document.getElementById("title").value = title;
 
@@ -315,46 +283,58 @@ const visualizeGameDetails = (e) => {
     document.getElementById("blob-filename").value = filename;
     return;
   }
-  console.log("TopParent ", topParent.children[0].innerHTML);
-  console.log(topParent);
 
-  let title = topParent.children[0].children[0].children[0].innerHTML;
+  topParent = getTopParent(e.target, "eye");
+
+  let title =
+    topParent.children[0].children[0].children[0].children[0].innerHTML;
   document.getElementById("title").value = title;
 
-  let description = topParent.children[0].children[0].children[1].innerHTML;
+  let description =
+    topParent.children[0].children[0].children[0].children[1].innerHTML;
   document.getElementById("description").innerHTML = description;
 
-  let type = topParent.children[0].children[0].children[2].innerHTML;
+  let type =
+    topParent.children[0].children[0].children[0].children[2].innerHTML;
   document.getElementById("type").value = type;
 
-  let engine = topParent.children[0].children[0].children[3].innerHTML;
+  let engine =
+    topParent.children[0].children[0].children[0].children[3].innerHTML;
   document.getElementById("engine").value = engine;
 
-  let status = topParent.children[0].children[0].children[4].innerHTML;
+  let status =
+    topParent.children[0].children[0].children[0].children[4].innerHTML;
   document.getElementById("status").value = status;
 
-  let media = topParent.children[0].children[0].children[5].innerHTML;
+  let media =
+    topParent.children[0].children[0].children[0].children[5].innerHTML;
   document.getElementById("device").value = media;
 
-  let weight = topParent.children[0].children[0].children[6].innerHTML;
+  let weight =
+    topParent.children[0].children[0].children[0].children[6].innerHTML;
   document.getElementById("weight").value = weight;
 
-  let players = topParent.children[0].children[0].children[7].innerHTML;
+  let players =
+    topParent.children[0].children[0].children[0].children[7].innerHTML;
   document.getElementById("playersNumber").value = players;
 
-  let creation_date = topParent.children[0].children[0].children[8].innerHTML;
+  let creation_date =
+    topParent.children[0].children[0].children[0].children[8].innerHTML;
   document.getElementById("creationDate").value = creation_date;
 
-  let delivery_date = topParent.children[0].children[0].children[9].innerHTML;
+  let delivery_date =
+    topParent.children[0].children[0].children[0].children[9].innerHTML;
   delivery_date = new Date(delivery_date);
   delivery_date = formatDate(delivery_date);
   document.getElementById("endDate").value = delivery_date;
 
-  let image = topParent.children[0].children[0].children[10].innerHTML;
+  let image =
+    topParent.children[0].children[0].children[0].children[10].innerHTML;
   document.getElementById("screenshot#_video-game-blob").src = image;
   document.getElementById("blob-content").value = image;
 
-  let filename = topParent.children[0].children[0].children[11].innerHTML;
+  let filename =
+    topParent.children[0].children[0].children[0].children[11].innerHTML;
   document.getElementById("blob_filename").innerHTML = filename;
   document.getElementById("blob-filename").value = filename;
 };
@@ -369,14 +349,12 @@ const fetchUserGames = async () => {
     delivery_date =
       select_delivery_date.options[select_delivery_date.selectedIndex].text;
     delivery_date = delivery_date === "Ascendant" ? "ASC" : "DESC";
-    console.log("Delivery date is " + delivery_date);
   }
 
   let select_status = document.getElementById("select-statut");
   let status = "";
   if (!isNullOrUndefined(select_status) && select_status.selectedIndex !== 0) {
     status = select_status.options[select_status.selectedIndex].text;
-    console.log("Status is " + status);
   }
 
   let select_weight = document.getElementById("select-weight");
@@ -384,14 +362,12 @@ const fetchUserGames = async () => {
   if (!isNullOrUndefined(select_weight) && select_weight.selectedIndex !== 0) {
     weight = select_weight.options[select_weight.selectedIndex].text;
     weight = weight === "Ascendant" ? "ASC" : "DESC";
-    console.log("Weight is " + weight);
   }
 
   let select_engine = document.getElementById("select-engine");
   let engine = "";
   if (!isNullOrUndefined(select_engine) && select_engine.selectedIndex !== 0) {
     engine = select_engine.options[select_engine.selectedIndex].text;
-    console.log("Engine is " + engine);
   }
 
   let select_category = document.getElementById("select-category");
@@ -401,21 +377,18 @@ const fetchUserGames = async () => {
     select_category.selectedIndex !== 0
   ) {
     type = select_category.options[select_category.selectedIndex].text;
-    console.log("Type is " + type);
   }
 
   let select_media = document.getElementById("select-device");
   let media = "";
   if (!isNullOrUndefined(select_media) && select_media.selectedIndex !== 0) {
     media = select_media.options[select_media.selectedIndex].text;
-    console.log("Media is " + media);
   }
 
   let toggle = document.getElementById("toggle-state");
   let fav = false;
   if (!isNullOrUndefined(toggle)) {
     fav = toggle.checked === "true";
-    console.log("Fav is " + fav);
   }
 
   const data = {
@@ -435,7 +408,6 @@ const fetchUserGames = async () => {
           Loading please wait...
           <div class="lds-dual-ring"></div>
     </div>`;
-  console.log("fetchUserGames data = " + JSON.stringify(data));
 
   const fetchedGames = await fetch("../backend/fetchVideoGames.php", {
     method: "POST",
@@ -450,13 +422,10 @@ const fetchUserGames = async () => {
     .then((result) => {
       return result.json();
     });
-  console.log("sql " + JSON.stringify(fetchedGames["sql"]));
-  console.log("rows " + JSON.stringify(fetchedGames["rows"]));
   let nodata =
     fetchedGames["no_data"] != null && fetchedGames["no_data"] != undefined;
   let dataFound =
     fetchedGames["games"] != null && fetchedGames["games"] != undefined;
-  console.log("no data = " + nodata + " Data found = " + dataFound);
   if (nodata) {
     listVideoContainer.innerHTML = `<div style="display:flex; flex-direction:column; align-items:center; justify-content:center; width:100%; height:100%; font-size:15pt; color:yellow;" >
               <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="bi bi-database-fill-exclamation" viewBox="0 0 16 16">
@@ -470,11 +439,9 @@ const fetchUserGames = async () => {
 
     return;
   } else if (dataFound) {
-    console.log(JSON.stringify(fetchedGames["games"]));
     //  listVideoContainer.innerHTML = "";
     listVideoContainer.innerHTML = "";
     let maxIndex = fetchedGames["games"].length - 1;
-    console.log("Max index = " + maxIndex);
     let i = 0,
       index = 0;
     for (i; i <= maxIndex; i++) {
@@ -546,23 +513,23 @@ const fetchUserGames = async () => {
       eyeStarContainer.appendChild(starButton);
       videoToastElement.appendChild(eyeStarContainer);
 
-      let content = `<table class="videoToast-dashTable" style="justify-content:center; align-items:center;">
-                <thead>
-                    <tr>
-                      <th>Titre</th>
-                      <th>Date de création</th>
+      let content = `<table id="eye-star-table-${index}" class="videoToast-dashTable" style="justify-content:center; align-items:center;">
+                <thead id="eye-star-thead-${index}">
+                    <tr id="eye-star-tr-${index}">
+                      <th id="eye-star-th-title-${index}">Titre</th>
+                      <th id="eye-star-th-creation-date-${index}">Date de création</th>
                     </tr>
                 </thead>
-                <tbody>
-                  <tr class="videoToast-dashTable-content" >
-                      <td id="title_${index}" > ${row["title"]}</td>
-                      <td> ${row["delivery_date"]}</td>
+                <tbody id="eye-star-tbody-${index}">
+                  <tr id="eye-star-dash-table-${index}" class="videoToast-dashTable-content" >
+                      <td id="eye-star-td-row-title_${index}" > ${row["title"]}</td>
+                      <td id="eye-star-td-row-delivery-date-${index}"> ${row["delivery_date"]}</td>
                   </tr>
                 </tbody>
               </table>
           </div>
-           <div class="screenshot">
-                 <img id="screenshot#_${index}" style="max-width: 100%;box-shadow: 0 0 15px black;border-radius:2px; " src="${row["blob"]}" alt="Girl in a jacket">
+           <div id="eye-star-div-screenshot-${index}" class="screenshot">
+                 <img id="eye-star-img-src-${index}" style="max-width: 100%;box-shadow: 0 0 15px black;border-radius:2px; " src="${row["blob"]}" alt="Girl in a jacket">
            </div>`;
       if (index != maxIndex) {
         content += `<div class="videoListVerticalSpace"></div>`;
@@ -606,14 +573,12 @@ const fetchAllVideoGames = async () => {
     delivery_date =
       select_delivery_date.options[select_delivery_date.selectedIndex].text;
     delivery_date = delivery_date === "Ascendant" ? "ASC" : "DESC";
-    console.log("Delivery date is " + delivery_date);
   }
 
   let select_status = document.getElementById("select-statut");
   let status = "";
   if (!isNullOrUndefined(select_status) && select_status.selectedIndex !== 0) {
     status = select_status.options[select_status.selectedIndex].text;
-    console.log("Status is " + status);
   }
 
   let select_weight = document.getElementById("select-weight");
@@ -621,14 +586,12 @@ const fetchAllVideoGames = async () => {
   if (!isNullOrUndefined(select_weight) && select_weight.selectedIndex !== 0) {
     weight = select_weight.options[select_weight.selectedIndex].text;
     weight = weight === "Ascendant" ? "ASC" : "DESC";
-    console.log("Weight is " + weight);
   }
 
   let select_engine = document.getElementById("select-engine");
   let engine = "";
   if (!isNullOrUndefined(select_engine) && select_engine.selectedIndex !== 0) {
     engine = select_engine.options[select_engine.selectedIndex].text;
-    console.log("Engine is " + engine);
   }
 
   let select_category = document.getElementById("select-category");
@@ -638,16 +601,13 @@ const fetchAllVideoGames = async () => {
     select_category.selectedIndex !== 0
   ) {
     type = select_category.options[select_category.selectedIndex].text;
-    console.log("Type is " + type);
   }
 
   let select_media = document.getElementById("select-device");
   let media = "";
   if (!isNullOrUndefined(select_media) && select_media.selectedIndex !== 0) {
     media = select_media.options[select_media.selectedIndex].text;
-    console.log("Media is " + media);
   }
-  console.log("Executing fetchallvideogames");
   const listVideoContainer = document.getElementById("videoListContainer");
   listVideoContainer.innerHTML = `<div style="display:flex; flex-direction:column; align-items:center; justify-content; center; margin-top: 350px; width:100%; height:100%; font-size:12pt; color:yellow;">
         <div class="spinner-border"></div>
@@ -679,7 +639,6 @@ const fetchAllVideoGames = async () => {
     fetchedGames["no_data"] != null && fetchedGames["no_data"] != undefined;
   let dataFound =
     fetchedGames["games"] != null && fetchedGames["games"] != undefined;
-  console.log("no data = " + nodata + " Data found = " + dataFound);
   if (nodata) {
     listVideoContainer.innerHTML = `<div style="display:flex; flex-direction:column; align-items:center; justify-content:center; width:100%; height:100%; font-size:15pt; color:yellow;" >
               <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="bi bi-database-fill-exclamation" viewBox="0 0 16 16">
@@ -693,11 +652,9 @@ const fetchAllVideoGames = async () => {
 
     return;
   } else if (dataFound) {
-    console.log(JSON.stringify(fetchedGames["games"]));
     //  listVideoContainer.innerHTML = "";
     listVideoContainer.innerHTML = "";
     let maxIndex = fetchedGames["games"].length - 1;
-    console.log("Max index = " + maxIndex);
     let i = 0,
       index = 0;
     for (i; i <= maxIndex; i++) {
@@ -724,23 +681,23 @@ const fetchAllVideoGames = async () => {
       <div id="gameData-div-blob-${index}" hidden>${row["blob"]}</div>
       <div id="gameData-div-blob-name-${index}" hidden>${row["blob_name"]}</div>`;
 
-      let tableContent = `<table class="videoToast-dashTable" style="justify-content:center; align-items:center;">
-                <thead>
-                    <tr>
-                      <th>Titre</th>
-                      <th>Date de création</th>
+      let tableContent = `<table id="gameData-table-${index}" class="videoToast-dashTable" style="justify-content:center; align-items:center;">
+                <thead id="gameData-thead-${index}">
+                    <tr id="gameData-tr-${index}">
+                      <th id="gameData-th-title-${index}">Titre</th>
+                      <th id="gameData-th-date-creation-${index}">Date de création</th>
                     </tr>
                 </thead>
-                <tbody>
-                  <tr class="videoToast-dashTable-content" >
-                      <td id="title_${index}" > ${row["title"]}</td>
-                      <td> ${row["delivery_date"]}</td>
+                <tbody id="gameData-body-${index}">
+                  <tr id="gameData-dashTable-content-title_${index}" class="videoToast-dashTable-content" >
+                      <td id="gameData-td-title_${index}" > ${row["title"]}</td>
+                      <td id="gameData-td-delivery-date-${index}"> ${row["delivery_date"]}</td>
                   </tr>
                 </tbody>
               </table>
           </div>
-           <div class="screenshot">
-                 <img id="screenshot#_${index}" style="max-width: 100%;box-shadow: 0 0 15px black;border-radius:2px; " src="${row["blob"]}" alt="Girl in a jacket">
+           <div id="gameData-screenshot-${index}" class="screenshot">
+                 <img id="gameData-screenshot#_${index}" style="max-width: 100%;box-shadow: 0 0 15px black;border-radius:2px; " src="${row["blob"]}" alt="Girl in a jacket">
            </div>`;
       if (index != maxIndex) {
         tableContent += `<div class="videoListVerticalSpace"></div>`;

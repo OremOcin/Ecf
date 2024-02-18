@@ -18,7 +18,6 @@ function getBlob(e) {
         document.getElementById("video-game-blob").files = dataTransfer.files;
         document.getElementById("screenshot#_video-game-blob").src =
           reader.result;
-        console.log("Filename = " + filename);
         document.getElementById("blob_filename").innerHTML = filename;
       };
     }

@@ -4,7 +4,6 @@ const adminCreateGame = (e) => {
   let title = document.getElementById("title").value;
 
   let delivery_date = document.getElementById("endDate").value;
-  console.log("delivery is " + delivery_date);
 
   let description = document.getElementById("description").value;
 
@@ -57,8 +56,6 @@ const adminCreateGame = (e) => {
     players: players,
     "total-budget": budget,
   };
-  console.log(JSON.stringify(data));
-
   const response = fetchCreateGame(data);
 };
 
@@ -80,7 +77,6 @@ const fetchCreateGame = async (data) => {
     .then((result) => {
       return result.json();
     });
-  console.log(JSON.stringify(doFetch));
   alert(doFetch["response"]);
   window.location = "adminCreateGamePage.php";
   window.location.reload();

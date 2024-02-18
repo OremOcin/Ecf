@@ -24,7 +24,6 @@ const adminCreateRole = (e) => {
     pwd: pwd,
     role: role,
   };
-  console.log(JSON.stringify(data));
   const response = fetchRoleInfo(data);
 };
 
@@ -46,7 +45,6 @@ const fetchRoleInfo = async (data) => {
     .then((result) => {
       return result.json();
     });
-  console.log(JSON.stringify(fetchRoleDetails));
   alert(fetchRoleDetails["response"]);
   window.location = "../pages/adminCreateProducerManagerPage.php";
 };

@@ -3,7 +3,6 @@ function publishNews() {
   const title = document.getElementById("title").value;
   const content = document.getElementById("news-content").value;
   const data = { title: title, content: content, image: image };
-  console.log("content = " + data);
   fetchNews(data);
 }
 async function fetchNews(data) {
@@ -20,7 +19,6 @@ async function fetchNews(data) {
     .then((result) => {
       return result.json();
     });
-  console.log("doFetchNews response " + JSON.stringify(doFetchNews));
   fetchAllNews();
   document.getElementById("blob-content").innerHTML = "";
   document.getElementById("title").value = "";
@@ -48,7 +46,6 @@ async function fetchAllNews() {
       return result.json();
     });
   const allNews = doFetchAllNews["news"];
-  //console.log("All news = " + JSON.stringify(allNews));
   if (allNews === null || allNews === undefined || allNews.length === 0) {
     const isNullOrUndefined = allNews === null || allNews === undefined;
     newsContainer.innerHTML = `<div style="display:flex; flex-direction:column; align-items:center; justify-content:center; width:100%; height:100%; font-size:15pt; color:yellow;" >
@@ -115,7 +112,6 @@ function getBlob(e) {
         dataTransfer.items.add(file);
         document.getElementById("news-file-blob").files = dataTransfer.files;
         document.getElementById("image-news-blob").src = reader.result;
-        console.log("Filename = " + filename);
       };
     }
   }
@@ -142,7 +138,6 @@ async function FetchAllDevGames() {
       return result.json();
     });
 
-  console.log(doFetchDevGames);
   const fetchedDevGames = doFetchDevGames["games"];
   if (
     fetchedDevGames === null ||

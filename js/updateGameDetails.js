@@ -54,15 +54,6 @@ const fetchGameDetails = async (data) => {
     data: data,
   };
 
-  /* const listVideoContainer = document.getElementById('videoListContainer');
-  listVideoContainer.innerHTML =
-   "<div style=\"display:flex; flex-direction:column; width:100%; height:100%; font-size:12pt; color:yellow;\">\
-        <div class=\"spinner-border\"></div>\
-          Loading please wait...\
-    </div>";*/
-
-  // console.log('fetchGames data = '+JSON.stringify(data));
-
   const fetchDetails = await fetch("../backend/updateGameDetails.php", {
     method: "POST",
     body: JSON.stringify(data),
@@ -76,13 +67,4 @@ const fetchGameDetails = async (data) => {
     .then((result) => {
       return result.json();
     });
-  /* console.log("Response "+ JSON.stringify(fetchDetails));
-  return; */
-  /*
-  if(document.getElementById('title') !== undefined) {
-    document.getElementById('title').value = fetchDetails['title'];
-  } else {
-    console.log("Title element not found.");
-  }
-  */
 };

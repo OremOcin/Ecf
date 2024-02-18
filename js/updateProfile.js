@@ -16,7 +16,6 @@ function getBlob(e) {
         dataTransfer.items.add(file);
         document.getElementById("avatar").files = dataTransfer.files;
         document.getElementById("image-avatar-blob").src = reader.result;
-        console.log("Filename = " + filename);
       };
     }
   }
@@ -26,7 +25,6 @@ function updateProfile(e) {
   e.stopPropagation();
   const email = document.getElementById("email").value;
   const currentEmail = document.getElementById("user-email").innerHTML;
-  console.log("email = '" + email + "'");
   if (email === "") {
     return;
   }
@@ -58,7 +56,6 @@ function updateProfile(e) {
     firstname: firstName,
     lastname: lastName,
   };
-  console.log("data", data);
   const doUpdate = doUpdateProfile(data);
 }
 
@@ -80,7 +77,6 @@ const doUpdateProfile = async (data) => {
     .catch((error) => {
       console.log("doUpdateProfile error doFetch " + error);
     });
-  console.log(JSON.stringify(doFetch));
   alert(doFetch["response"]);
   const username = doFetch["username"];
   const loginDataDiv = document.getElementById("user-name-div");
@@ -89,13 +85,10 @@ const doUpdateProfile = async (data) => {
 
 async function fetchUserProfile() {
   const email = document.getElementById("user-email").innerHTML;
-  console.log("email = " + email);
   const data = {
     email: email,
   };
-  console.log("data ", data);
   const fetchUserProfile = await doFetchUserProfile(data);
-  console.log("fetch user profile", fetchUserProfile);
 }
 
 const doFetchUserProfile = async (data) => {
@@ -116,7 +109,6 @@ const doFetchUserProfile = async (data) => {
     .then((result) => {
       return result.json();
     });
-  console.log(JSON.stringify(doFetch["response"]));
   document.getElementById("pseudo").value = doFetch["response"]["pseudo"];
   document.getElementById("email").value = doFetch["response"]["email"];
   document.getElementById("firstName").value = doFetch["response"]["firstname"];

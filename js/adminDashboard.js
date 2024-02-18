@@ -15,8 +15,6 @@ const clickToast = (e) => {
   let target = e.currentTarget;
   let tbody = target.querySelector("tbody");
 
-  console.log("currentTarget " + target.innerHTML);
-
   let title = tbody.children[0].children[0].innerHTML;
   document.getElementById("title").value = title;
 
@@ -63,7 +61,6 @@ const clickToast = (e) => {
   let filename = span.children[11].innerHTML;
   document.getElementById("blob_filename").innerHTML = filename;
   document.getElementById("blob-filename").value = filename;
-  console.log("fetching budgets now");
   fetchBudgets();
 };
 
@@ -76,7 +73,6 @@ const fetchGames = async () => {
         <div class=spinner-border></div>\
           Loading please wait...\
     </div>";
-  console.log("fetchGames data = " + JSON.stringify(data));
 
   const fetchedGames = await fetch("../backend/adminBrowseVideoGames.php", {
     method: "POST",
@@ -95,7 +91,6 @@ const fetchGames = async () => {
     fetchedGames["no_data"] != null && fetchedGames["no_data"] != undefined;
   let dataFound =
     fetchedGames["games"] != null && fetchedGames["games"] != undefined;
-  console.log("no data = " + nodata + " Data found = " + dataFound);
   if (nodata) {
     listVideoContainer.innerHTML = `<div style=display:flex; flex-direction:column; align-items:center; width:100%; height:100%; font-size:15pt; color:yellow; >
               <svg xmlns=http://www.w3.org/2000/svg width=64 height=64 fill=currentColor class=bi bi-database-fill-exclamation viewBox=0 0 16 16>
@@ -109,10 +104,8 @@ const fetchGames = async () => {
 
     return;
   } else if (dataFound) {
-    console.log(JSON.stringify(fetchedGames["games"]));
     listVideoContainer.innerHTML = "";
     let maxIndex = fetchedGames["games"].length - 1;
-    console.log("Max index = " + maxIndex);
     let i = 0,
       index = 0;
     for (i; i <= maxIndex; i++) {
@@ -167,7 +160,6 @@ const fetchGames = async () => {
 
 const fetchBudgets = () => {
   const title = document.getElementById("title").value;
-  console.log("title innerhtml " + title);
   if (title === "") {
     return;
   }
@@ -192,7 +184,6 @@ const doFetchBudgets = async (title) => {
 };
 
 const getTopParent = (element, pattern) => {
-  console.log("Element node name " + element.getAttribute("id"));
   if (!element.parentElement.getAttribute("id").includes(pattern)) {
     return element;
   }
@@ -202,9 +193,7 @@ const getTopParent = (element, pattern) => {
 
 const clickTrash = async (e) => {
   e.stopPropagation();
-  console.log("Je vais m'autodétruire.");
   const buttonTrash = getTopParent(e.target, "button-trash");
-  console.log("html " + buttonTrash.innerHTML);
   const title = document.getElementById("trash-button-title").innerHTML;
   const date = document.getElementById("trash-button-date").innerHTML;
   const value = document.getElementById("trash-button-value").innerHTML;
@@ -223,7 +212,6 @@ const clickTrash = async (e) => {
     .then((result) => {
       return result.json();
     });
-  console.log(JSON.stringify(fetchRemoveBudget["response"]));
   fetchBudgets();
 };
 const updateBudgets = async (e) => {
@@ -234,7 +222,6 @@ const updateBudgets = async (e) => {
   date = date.replaceAll("-", "/");
   const comment = document.getElementById("causeLastMaj").value;
   const budget = { title: title, value: value, date: date, comment: comment };
-  console.log("budget " + JSON.stringify(budget));
 
   const fetchedBudgets = await fetch("../backend/fetchAddBudget.php", {
     method: "POST",
@@ -249,7 +236,6 @@ const updateBudgets = async (e) => {
     .then((result) => {
       return result.json();
     });
-  console.log(JSON.stringify(fetchedBudgets));
   processBudgetsHtml(fetchedBudgets);
   document.getElementById("title").value = "";
   document.getElementById("actualBudget").value = "";
@@ -258,7 +244,6 @@ const updateBudgets = async (e) => {
 };
 
 function processBudgetsHtml(fetchedBudgets) {
-  console.log("Budgets " + JSON.stringify(fetchedBudgets["response"]));
   const size = fetchedBudgets["response"].length;
   let index = 0;
   const budgetListDiv = document.getElementById("budgetListContainer");

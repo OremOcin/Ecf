@@ -72,7 +72,6 @@ const fetchGames = async (clickableToast = true) => {
         <div class="spinner-border"></div>\
           Loading please wait...\
     </div>';
-  console.log("fetchGames data = " + JSON.stringify(data));
 
   const fetchedGames = await fetch("../backend/adminBrowseVideoGames.php", {
     method: "POST",
@@ -91,7 +90,6 @@ const fetchGames = async (clickableToast = true) => {
     fetchedGames["no_data"] != null && fetchedGames["no_data"] != undefined;
   let dataFound =
     fetchedGames["games"] != null && fetchedGames["games"] != undefined;
-  console.log("no data = " + nodata + " Data found = " + dataFound);
   if (nodata) {
     listVideoContainer.innerHTML =
       '<div style="display:flex; flex-direction:column; align-items:center; ; width:100%; height:100%; font-size:15pt; color:yellow;" >\
@@ -106,10 +104,8 @@ const fetchGames = async (clickableToast = true) => {
 
     return;
   } else if (dataFound) {
-    //   console.log(JSON.stringify(fetchedGames['games']));
     listVideoContainer.innerHTML = "";
     let maxIndex = fetchedGames["games"].length - 1;
-    console.log("Max index = " + maxIndex);
     let i = 0,
       index = 0;
     for (i; i <= maxIndex; i++) {
