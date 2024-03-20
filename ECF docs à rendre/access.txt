@@ -1,0 +1,4 @@
+admin@gamesoft.com : adminpassword    
+manager1@gamesoft.com : managerpassword    
+producer1@gamesoft.com : producerpassword    
+Bob@jacob.com : bobpassword
